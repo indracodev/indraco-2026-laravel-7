@@ -10,18 +10,27 @@ class Brand extends Model
 {
     use HasLogAktivitas;
 
-
     protected $table = 'master_merek';
     protected $guarded = [];
 
+    /**
+     * Return localized name: use deskripsi_eng when locale is English.
+     */
     public function getNameAttribute()
     {
-        return $this->nama_merek;
+        return app()->getLocale() === 'en' && !empty($this->nama_merek_eng)
+            ? $this->nama_merek_eng
+            : $this->nama_merek;
     }
 
-    public function setNameAttribute($value)
+    /**
+     * Return localized description: use deskripsi_eng when locale is English.
+     */
+    public function getDescAttribute()
     {
-        $this->attributes['nama_merek'] = $value;
+        return app()->getLocale() === 'en' && !empty($this->deskripsi_eng)
+            ? $this->deskripsi_eng
+            : $this->deskripsi;
     }
 
     public function products()

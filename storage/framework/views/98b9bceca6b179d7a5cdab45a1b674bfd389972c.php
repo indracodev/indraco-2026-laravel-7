@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr" @hasSection('html_theme') data-bs-theme="@yield('html_theme')" @endif>
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" dir="ltr" <?php if (! empty(trim($__env->yieldContent('html_theme')))): ?> data-bs-theme="<?php echo $__env->yieldContent('html_theme'); ?>" <?php endif; ?>>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="@yield('meta_description', 'INDRACO adalah perusahaan FMCG terkemuka di Indonesia sejak 1971, menghadirkan berbagai produk berkualitas seperti kopi, teh, jahe, dan cokelat.')">
+    <meta name="description" content="<?php echo $__env->yieldContent('meta_description', 'INDRACO adalah perusahaan FMCG terkemuka di Indonesia sejak 1971, menghadirkan berbagai produk berkualitas seperti kopi, teh, jahe, dan cokelat.'); ?>">
     
-    <meta property="og:title" content="@yield('og_title', 'INDRACO – Indonesia Leading FMCG Company Since 1971')">
-    <meta property="og:description" content="@yield('og_description', 'Perusahaan kopi dan produk konsumen Indonesia sejak 1971.')">
-    <meta property="og:image" content="@yield('og_image', asset('images/og-image.jpg'))">
+    <meta property="og:title" content="<?php echo $__env->yieldContent('og_title', 'INDRACO – Indonesia Leading FMCG Company Since 1971'); ?>">
+    <meta property="og:description" content="<?php echo $__env->yieldContent('og_description', 'Perusahaan kopi dan produk konsumen Indonesia sejak 1971.'); ?>">
+    <meta property="og:image" content="<?php echo $__env->yieldContent('og_image', asset('images/og-image.jpg')); ?>">
     <meta property="og:type" content="website">
     
-    <link rel="shortcut icon" href="{{ asset('images/icon-indraco.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo e(asset('images/icon-indraco.ico')); ?>" type="image/x-icon">
     
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/bootstrap.min.css')); ?>">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,58 +22,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/theme.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/frontend.css')); ?>">
     
-    @yield('styles')
+    <?php echo $__env->yieldContent('styles'); ?>
     
-    <title>@yield('title', 'Perusahaan FMCG Terkemuka di Indonesia Sejak 1971 – INDRACO')</title>
+    <title><?php echo $__env->yieldContent('title', 'Perusahaan FMCG Terkemuka di Indonesia Sejak 1971 – INDRACO'); ?></title>
 </head>
 
 <body>
-    <a href="#konten" class="visually-hidden-focusable">{{ __('skip_to_content') }}</a>
+    <a href="#konten" class="visually-hidden-focusable"><?php echo e(__('skip_to_content')); ?></a>
     
-    @include('partials.header')
-    @include('partials.menu_mobile')
+    <?php echo $__env->make('partials.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('partials.menu_mobile', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <main id="konten">
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
-    @include('partials.footer')
-    @include('partials.modal_search')
+    <?php echo $__env->make('partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('partials.modal_search', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <!-- Vendor JS -->
-    <script src="{{ asset('assets/vendor/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/gsap.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/ScrollTrigger.min.js') }}"></script>
+    <script src="<?php echo e(asset('assets/vendor/jquery-3.7.1.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/vendor/bootstrap.bundle.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/vendor/gsap.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/vendor/ScrollTrigger.min.js')); ?>"></script>
 
     <!-- Custom JS -->
-    <script src="{{ asset('js/theme.js') }}"></script>
-    <script src="{{ asset('js/frontend.js') }}"></script>
+    <script src="<?php echo e(asset('js/theme.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/frontend.js')); ?>"></script>
     
-    @yield('scripts')
+    <?php echo $__env->yieldContent('scripts'); ?>
 
-    {{-- Geolocation Detection --}}
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
         // Geolocation & Localization Logger
         function logGeo(type, message) {
-            @if(config('app.debug'))
+            <?php if(config('app.debug')): ?>
                 const colors = {
                     'info': '#0d6efd',
                     'success': '#198754',
                     'warn': '#ffc107'
                 };
                 console.log(`%c[Geolocation] %c${message}`, `color: ${colors[type]}; font-weight: bold;`, 'color: inherit;');
-            @endif
+            <?php endif; ?>
         }
 
         async function detectLocation() {
             const cached = localStorage.getItem('lang_detected');
             const cachedLocation = localStorage.getItem('lang_location');
-            const currentLang = "{{ app()->getLocale() }}";
+            const currentLang = "<?php echo e(app()->getLocale()); ?>";
 
             // If we have cached location info, log it immediately
             if (cachedLocation) {
@@ -106,7 +106,7 @@
         });
     </script>
 
-    @if(request()->has('preview'))
+    <?php if(request()->has('preview')): ?>
     <style>
         [data-i18n] {
             position: relative !important;
@@ -160,6 +160,7 @@
             }
         });
     </script>
-    @endif
+    <?php endif; ?>
 </body>
 </html>
+<?php /**PATH C:\laragon\www\#indraco\indraco-2026\indraco-2026-laravel-7\resources\views/layouts/app.blade.php ENDPATH**/ ?>

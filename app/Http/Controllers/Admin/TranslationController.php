@@ -21,14 +21,20 @@ class TranslationController extends Controller
         
         // Define groups based on prefix
         $groupLabels = [
-            'home' => 'Home Page',
-            'about' => 'About Us',
-            'nav' => 'Navigation Menu',
-            'fs' => 'Food Service Page',
-            'footbar' => 'Footer',
-            'brand' => 'Brand Categories',
-            'product' => 'Products Page',
-            'general' => 'Umum (General)'
+            'home'     => 'Home Page',
+            'about'    => 'About Us',
+            'nav'      => 'Navigation Menu',
+            'fs'       => 'Food Service Page',
+            'footbar'  => 'Footer',
+            'brand'    => 'Brand Categories',
+            'product'  => 'Products Page',
+            'supresso' => 'Supresso / Collection Brand',
+            'business' => 'Business Page',
+            'news'     => 'News & Events',
+            'download' => 'Downloads Page',
+            'career'   => 'Careers Page',
+            'contact'  => 'Contact Us',
+            'general'  => 'Umum (General)'
         ];
 
         $groupedTranslations = [];
