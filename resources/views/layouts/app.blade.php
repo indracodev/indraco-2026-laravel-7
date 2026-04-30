@@ -58,31 +58,41 @@
     {{-- Geolocation Detection --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (!localStorage.getItem('lang_detected')) {
-                fetch('https://ipapi.co/json/')
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("%c[Geolocation]%c Access from: " + (data.city || 'Unknown City') + ", " + (data.country_name || 'Unknown Country') + " (" + data.country_code + ")", "color: #0d6efd; font-weight: bold", "color: inherit");
-                        
-                        let targetLocale = (data.country_code === 'ID') ? 'id' : 'en';
-                        let currentLocale = "{{ app()->getLocale() }}";
-                        
-                        if (targetLocale !== currentLocale) {
-                            console.log("%c[Localization]%c Auto-switching language to: " + targetLocale, "color: #198754; font-weight: bold", "color: inherit");
-                            localStorage.setItem('lang_detected', 'true');
-                            window.location.href = "{{ url('/lang') }}/" + targetLocale;
-                        } else {
-                            localStorage.setItem('lang_detected', 'true');
-                            console.log("%c[Localization]%c Language already matches region: " + targetLocale, "color: #198754; font-weight: bold", "color: inherit");
-                        }
-                    })
-                    .catch(error => {
-                        console.warn('[Geolocation] Failed to detect location:', error);
-                        localStorage.setItem('lang_detected', 'true');
-                    });
-            } else {
-                 console.log("%c[Localization]%c Regional detection active. Current locale: {{ app()->getLocale() }}", "color: #6c757d; font-weight: bold", "color: inherit");
+        // Simple Geolocation & Localization Logger
+        function logGeo(step, detail) {
+            const styles = {
+                'Init': 'background: #007bff; color: #fff; border-radius: 3px; padding: 1px 5px;',
+                'Success': 'background: #28a745; color: #fff; border-radius: 3px; padding: 1px 5px;',
+                'Error': 'background: #6c757d; color: #fff; border-radius: 3px; padding: 1px 5px;'
+            };
+            const type = step.includes('Failed') || step.includes('Error') ? 'Error' : (step.includes('Detected') ? 'Success' : 'Init');
+            console.log(`%c[Geo] ${step}:`, styles[type], detail);
+        }
+
+        async function detectLocation() {
+            if (localStorage.getItem('lang_detected')) return;
+
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                const country = data.country_code; // ID for Indonesia
+                const currentLang = "{{ app()->getLocale() }}";
+                let targetLang = country === 'ID' ? 'id' : 'en';
+
+                logGeo('Detected', `${data.country_name} (${country}) -> Target: ${targetLang}`);
+
+                if (currentLang !== targetLang) {
+                    localStorage.setItem('lang_detected', 'true');
+                    window.location.href = `/lang/${targetLang}`;
+                } else {
+                    localStorage.setItem('lang_detected', 'true');
+                }
+            } catch (error) {
+                logGeo('Error', 'Service unavailable, using default.');
+                localStorage.setItem('lang_detected', 'true');
             }
+        }
+        detectLocation();
         });
     </script>
 
