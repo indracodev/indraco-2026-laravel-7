@@ -4,9 +4,11 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasLogAktivitas;
 
 class News extends Model
 {
+    use HasLogAktivitas;
 
 
     protected $table = 'master_news';

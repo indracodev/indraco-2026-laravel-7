@@ -8,9 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
+use App\Traits\HasLogAktivitas;
+
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasLogAktivitas;
 
     protected $table = 'master_admin';
 

@@ -4,9 +4,11 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasLogAktivitas;
 
 class Brand extends Model
 {
+    use HasLogAktivitas;
 
 
     protected $table = 'master_merek';

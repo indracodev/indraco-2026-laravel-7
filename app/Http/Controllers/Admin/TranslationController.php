@@ -10,8 +10,8 @@ class TranslationController extends Controller
 {
     public function index(Request $request)
     {
-        $idPath = base_path('lang/id.json');
-        $enPath = base_path('lang/en.json');
+        $idPath = resource_path('lang/id.json');
+        $enPath = resource_path('lang/en.json');
 
         $idData = File::exists($idPath) ? json_decode(File::get($idPath), true) : [];
         $enData = File::exists($enPath) ? json_decode(File::get($enPath), true) : [];
@@ -53,6 +53,11 @@ class TranslationController extends Controller
             // Determine group
             $prefix = explode('_', $key)[0];
             $groupKey = array_key_exists($prefix, $groupLabels) ? $prefix : 'general';
+
+            // Special mapping for navigation sub-keys
+            if ($prefix === 'naveq' || $prefix === 'navdesc') {
+                $groupKey = 'nav';
+            }
             
             $groupedTranslations[$groupKey][$key] = [
                 'id' => $idData[$key] ?? '',
@@ -72,8 +77,8 @@ class TranslationController extends Controller
 
     public function update(Request $request)
     {
-        $idPath = base_path('lang/id.json');
-        $enPath = base_path('lang/en.json');
+        $idPath = resource_path('lang/id.json');
+        $enPath = resource_path('lang/en.json');
         
         $idData = File::exists($idPath) ? json_decode(File::get($idPath), true) : [];
         $enData = File::exists($enPath) ? json_decode(File::get($enPath), true) : [];

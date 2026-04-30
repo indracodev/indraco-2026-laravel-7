@@ -9,7 +9,7 @@ class AdminMenu extends Model
 {
 
 
-    public array $children_list = [];
+    public $children_list = [];
 
     protected $fillable = [
         'parent_id', 'type', 'title', 'url', 'icon', 'order', 'roles_allowed', 'is_active'

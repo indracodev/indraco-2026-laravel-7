@@ -4,9 +4,11 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasLogAktivitas;
 
 class Category extends Model
 {
+    use HasLogAktivitas;
 
 
     protected $table = 'master_kategori';
