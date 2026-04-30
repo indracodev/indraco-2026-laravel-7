@@ -60,12 +60,14 @@
         document.addEventListener('DOMContentLoaded', function() {
         // Geolocation & Localization Logger
         function logGeo(type, message) {
-            const colors = {
-                'info': '#0d6efd',
-                'success': '#198754',
-                'warn': '#ffc107'
-            };
-            console.log(`%c[Geolocation] %c${message}`, `color: ${colors[type]}; font-weight: bold;`, 'color: inherit;');
+            @if(config('app.debug'))
+                const colors = {
+                    'info': '#0d6efd',
+                    'success': '#198754',
+                    'warn': '#ffc107'
+                };
+                console.log(`%c[Geolocation] %c${message}`, `color: ${colors[type]}; font-weight: bold;`, 'color: inherit;');
+            @endif
         }
 
         async function detectLocation() {
