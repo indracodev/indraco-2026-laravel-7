@@ -58,28 +58,32 @@
     {{-- Geolocation Detection --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        // Simple Geolocation & Localization Logger
-        function logGeo(step, detail) {
+        // Geolocation & Localization Logger
+        function logGeo(type, message) {
             const styles = {
-                'Init': 'background: #007bff; color: #fff; border-radius: 3px; padding: 1px 5px;',
-                'Success': 'background: #28a745; color: #fff; border-radius: 3px; padding: 1px 5px;',
-                'Error': 'background: #6c757d; color: #fff; border-radius: 3px; padding: 1px 5px;'
+                'info': 'color: #0d6efd; font-weight: bold;',
+                'success': 'color: #198754; font-weight: bold;',
+                'warn': 'color: #6c757d; font-style: italic;'
             };
-            const type = step.includes('Failed') || step.includes('Error') ? 'Error' : (step.includes('Detected') ? 'Success' : 'Init');
-            console.log(`%c[Geo] ${step}:`, styles[type], detail);
+            console.log(`%c[Geolocation] %c${message}`, styles[type], 'color: inherit;');
         }
 
         async function detectLocation() {
-            if (localStorage.getItem('lang_detected')) return;
+            const cached = localStorage.getItem('lang_detected');
+            const currentLang = "{{ app()->getLocale() }}";
+
+            if (cached) {
+                logGeo('info', `Active (${currentLang.toUpperCase()})`);
+                return;
+            }
 
             try {
                 const response = await fetch('https://ipapi.co/json/');
                 const data = await response.json();
-                const country = data.country_code; // ID for Indonesia
-                const currentLang = "{{ app()->getLocale() }}";
+                const country = data.country_code;
                 let targetLang = country === 'ID' ? 'id' : 'en';
 
-                logGeo('Detected', `${data.country_name} (${country}) -> Target: ${targetLang}`);
+                logGeo('success', `Detected: ${data.country_name} (${country}) -> Target: ${targetLang.toUpperCase()}`);
 
                 if (currentLang !== targetLang) {
                     localStorage.setItem('lang_detected', 'true');
@@ -88,7 +92,7 @@
                     localStorage.setItem('lang_detected', 'true');
                 }
             } catch (error) {
-                logGeo('Error', 'Service unavailable, using default.');
+                logGeo('warn', 'Detection service temporary unavailable.');
                 localStorage.setItem('lang_detected', 'true');
             }
         }
