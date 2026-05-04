@@ -16,6 +16,7 @@ class NewsController extends Controller
     public function show($slug)
     {
         $item = News::where('slug', $slug)->firstOrFail();
-        return view('news.show', compact('item'));
+        $news = News::orderBy('id', 'desc')->paginate(9);
+        return view('news.show', compact('item', 'news'));
     }
 }
