@@ -48,7 +48,7 @@
                     <div class="mt-4">
                         {{ $news->links() }}
                     </div>
-                    <a href="{{ route('news') }}" class="btn btn-outline-secondary w-100 mt-3" data-i18n="news_back">{{ __('news_back') }}</a>
+                    <a href="{{ route('news') }}" class="btn btn-outline-primary w-100 mt-3" data-i18n="news_back">{{ __('news_back') }}</a>
                 </div>
             </div>
         </div>
