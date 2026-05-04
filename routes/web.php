@@ -17,8 +17,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
-Route::get('/product-indraco/{slug}', [ProductController::class, 'indraco'])->name('product.indraco');
-Route::get('/product-supresso/{slug}', [ProductController::class, 'supresso'])->name('product.supresso');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
 // News
 Route::get('/news', [NewsController::class, 'index'])->name('news');

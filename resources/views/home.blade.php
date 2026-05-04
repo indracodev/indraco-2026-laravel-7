@@ -96,49 +96,49 @@
                     <h3 class="fs-4 fw-bold mb-4" data-i18n="coffee">{{ __('coffee') }}</h3>
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-3 g-sm-4 g-md-5">
                         <div class="col">
-                           <a href="{{ route('product.supresso', 'supresso') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'supresso') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-supresso.png') }}" data-light="{{ asset('images/logo-supresso.png') }}" data-dark="{{ asset('images/logo-supresso.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
                            </a>
                         </div>
                         <div class="col">
-                           <a href="{{ route('product.indraco', 'balicafe') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'balicafe') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-balicafe.png') }}" data-light="{{ asset('images/logo-balicafe.png') }}" data-dark="{{ asset('images/logo-balicafe.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
                            </a>
                         </div>
                         <div class="col">
-                           <a href="{{ route('product.indraco', 'ucafe') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'ucafe') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-ucafe-invert.png') }}" data-light="{{ asset('images/logo-ucafe.png') }}" data-dark="{{ asset('images/logo-ucafe-invert.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
                            </a>
                         </div>
                         <div class="col">
-                           <a href="{{ route('product.indraco', 'rasa-sayang') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'rasa-sayang') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-rasa-sayang.png') }}" data-light="{{ asset('images/logo-rasa-sayang.png') }}" data-dark="{{ asset('images/logo-rasa-sayang.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
                            </a>
                         </div>
                         <div class="col">
-                           <a href="{{ route('product.indraco', 'tugu-buaya') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'tugu-buaya') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-tugu-buaya-invert.png') }}" data-light="{{ asset('images/logo-tugu-buaya.png') }}" data-dark="{{ asset('images/logo-tugu-buaya-invert.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
                            </a>
                         </div>
                         <div class="col">
-                           <a href="{{ route('product.indraco', 'uang-emas') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'uang-emas') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-uang-emas-invert.png') }}" data-light="{{ asset('images/logo-uang-emas.png') }}" data-dark="{{ asset('images/logo-uang-emas-invert.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
                            </a>
                         </div>
                         <div class="col">
-                           <a href="{{ route('product.indraco', 'haoCafe') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'haoCafe') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-hao-cafe.png') }}" data-light="{{ asset('images/logo-hao-cafe.png') }}" data-dark="{{ asset('images/logo-hao-cafe.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
@@ -155,7 +155,7 @@
                      <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-3 g-sm-4 g-md-5">
                         <div class="col">
                            <h3 class="fs-4 fw-bold mb-4 d-xl-none" data-i18n="ginger">{{ __('ginger') }}</h3>
-                           <a href="{{ route('product.indraco', 'jaheku') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'jaheku') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-jaheku.png') }}" data-light="{{ asset('images/logo-jaheku.png') }}" data-dark="{{ asset('images/logo-jaheku.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
@@ -163,7 +163,7 @@
                         </div>
                         <div class="col">
                            <h3 class="fs-4 fw-bold mb-4 d-xl-none" data-i18n="choconutmilk">{{ __('choconutmilk') }}</h3>
-                           <a href="{{ route('product.indraco', 'intirasa') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'intirasa') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-intirasa.png') }}" data-light="{{ asset('images/logo-intirasa.png') }}" data-dark="{{ asset('images/logo-intirasa.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>
@@ -171,7 +171,7 @@
                         </div>
                         <div class="col">
                            <h3 class="fs-4 fw-bold mb-4 d-xl-none" data-i18n="chocolate">{{ __('chocolate') }}</h3>
-                           <a href="{{ route('product.indraco', 'brochoco') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'brochoco') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-brochoco.png') }}" data-light="{{ asset('images/logo-brochoco.png') }}" data-dark="{{ asset('images/logo-brochoco.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>

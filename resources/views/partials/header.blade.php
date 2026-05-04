@@ -105,9 +105,8 @@
                                                         @if($cat->slug === 'produk-konsumen')
                                                             @php
                                                                 $ms = str_replace('consumer-', '', $sub->slug);
-                                                                $href = str_contains($sub->slug,'supresso') ? route('product.supresso',$ms) : route('product.indraco',$ms);
                                                             @endphp
-                                                            <a href="{{ $href }}" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover {{ $subIndex === 0 ? 'active' : '' }}" id="tab-link-{{ $sub->slug }}" data-bs-toggle="pill" data-bs-target="#tab-pane-{{ $sub->slug }}" data-i18n="{{ $lk }}">{{ __($lk) }}</a>
+                                                            <a href="{{ route('products.show', $ms) }}" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover {{ $subIndex === 0 ? 'active' : '' }}" id="tab-link-{{ $sub->slug }}" data-bs-toggle="pill" data-bs-target="#tab-pane-{{ $sub->slug }}" data-i18n="{{ $lk }}">{{ __($lk) }}</a>
                                                         @else
                                                             <button type="button" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover {{ $subIndex === 0 ? 'active' : '' }}" id="tab-link-{{ $sub->slug }}" data-bs-toggle="pill" data-bs-target="#tab-pane-{{ $sub->slug }}" role="tab" aria-selected="{{ $subIndex === 0 ? 'true' : 'false' }}" data-i18n="{{ $lk }}">{{ __($lk) }}</button>
                                                         @endif
