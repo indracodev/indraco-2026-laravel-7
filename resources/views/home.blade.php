@@ -138,7 +138,7 @@
                            </a>
                         </div>
                         <div class="col">
-                           <a href="{{ route('products.show', 'haoCafe') }}" class="text-reset text-decoration-none opacity-100">
+                           <a href="{{ route('products.show', 'hao-cafe') }}" class="text-reset text-decoration-none opacity-100">
                               <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                  <img src="{{ asset('images/logo-hao-cafe.png') }}" data-light="{{ asset('images/logo-hao-cafe.png') }}" data-dark="{{ asset('images/logo-hao-cafe.png') }}" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="" loading="lazy" aria-hidden="true">
                               </article>

@@ -52,7 +52,7 @@
                 <h5 class="fs-6 fw-bold text-uppercase mb-3">{{ __('footbar_heading_product') }}</h5>
                 <ul class="list-unstyled mb-0 d-flex flex-wrap row-gap-2 column-gap-3 d-lg-grid column-gap-lg-5" style="grid-template-columns: repeat(2, 1fr);">
                     @php
-                        $footer_brands_list = ['supresso', 'balicafe', 'ucafe', 'rasa-sayang', 'tugu-buaya', 'uang-emas', 'brochoco', 'jaheku', 'intirasa', 'haoCafe'];
+                        $footer_brands_list = ['supresso', 'balicafe', 'ucafe', 'rasa-sayang', 'tugu-buaya', 'uang-emas', 'brochoco', 'jaheku', 'intirasa', 'hao-cafe'];
                     @endphp
                     @foreach($footer_brands_list as $fb)
                     @php
