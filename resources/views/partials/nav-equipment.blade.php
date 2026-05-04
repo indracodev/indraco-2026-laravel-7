@@ -3,7 +3,7 @@
     <button type="button" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover active" id="tab-link-product-equipment-coffee-machine" data-bs-toggle="pill" data-bs-target="#tab-pane-product-equipment-coffee-machine" aria-selected="true" data-i18n="naveq_1">{{ __('naveq_1') }}</button>
     <button type="button" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover" id="tab-link-product-equipment-dispenser" data-bs-toggle="pill" data-bs-target="#tab-pane-product-equipment-dispenser" aria-selected="false" data-i18n="naveq_2">{{ __('naveq_2') }}</button>
     <button type="button" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover" id="tab-link-product-equipment-accessories" data-bs-toggle="pill" data-bs-target="#tab-pane-product-equipment-accessories" aria-selected="false" data-i18n="naveq_3">{{ __('naveq_3') }}</button>
-    <a href="https://supresso.com/id/kraton" target="_blank" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover" data-i18n="naveq_4">{{ __('naveq_4') }}</a>
+    <a href="https://supresso.co.id/login" target="_blank" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover" data-i18n="naveq_4">{{ __('naveq_4') }}</a>
 </div>
 <div class="vr"></div>
 <div class="tab-content">
