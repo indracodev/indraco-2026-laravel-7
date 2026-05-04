@@ -67,7 +67,7 @@ class News extends Model
 
     public function getTranslatedTitleAttribute()
     {
-        if (app()->getLocale() === 'en' && !empty($this->title_en)) {
+        if (app()->getLocale() === 'en') {
             return $this->title_en;
         }
         return $this->title;
@@ -75,7 +75,7 @@ class News extends Model
 
     public function getTranslatedDateAttribute()
     {
-        if (app()->getLocale() === 'en' && !empty($this->date_text_en)) {
+        if (app()->getLocale() === 'en') {
             return $this->date_text_en;
         }
         return $this->date_text;
@@ -83,7 +83,7 @@ class News extends Model
 
     public function getTranslatedContentAttribute()
     {
-        if (app()->getLocale() === 'en' && !empty($this->content_en)) {
+        if (app()->getLocale() === 'en') {
             return $this->content_en;
         }
         return $this->content;
