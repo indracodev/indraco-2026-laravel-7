@@ -26,6 +26,14 @@ class ProductController extends Controller
         return view('products.index', compact('brands', 'banners'));
     }
 
+    public function show($slug)
+    {
+        if (in_array($slug, ['supresso', 'supresso-kraton'])) {
+            return $this->supresso($slug);
+        }
+        return $this->indraco($slug);
+    }
+
     public function indraco($slug)
     {
         $brand = Brand::where('slug', $slug)->firstOrFail();

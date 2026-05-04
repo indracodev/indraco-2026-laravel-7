@@ -7,7 +7,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
          </div>
          <div class="modal-body">
-            <form role="search" action="{{ route('product.indraco', ['slug' => 'tugu-buaya']) }}" method="GET">
+            <form role="search" action="{{ route('products.show', ['slug' => 'tugu-buaya']) }}" method="GET">
                <div class="mb-3">
                   <label for="search" class="form-label visually-hidden">Pencarian</label>
                   <input type="search" name="q" class="form-control" id="search" placeholder="Apa yang ingin Anda cari?">
