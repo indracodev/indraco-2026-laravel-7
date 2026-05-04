@@ -1,0 +1,272 @@
+<?php $__env->startSection('title', __('contact_title_page')); ?>
+
+<?php $__env->startSection('content'); ?>
+<main id="konten">
+    <div class="py-5">
+        <div class="container py-lg-5">
+            <h1 class="display-4 fw-bold text-uppercase lh-1"><?php echo e(__('contact_1')); ?></h1>
+            <p class="mb-5"><?php echo e(__('contact_1_desc')); ?></p>
+
+            <?php if(session('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php echo e(session('success')); ?>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php endif; ?>
+
+            <?php if(session('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?php echo e(session('error')); ?>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php endif; ?>
+
+            <?php if($errors->any()): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $err): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($err); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php endif; ?>
+
+            <form method="post" aria-labelledby="form-title" action="<?php echo e(route('contact.submit')); ?>">
+                <?php echo csrf_field(); ?>
+                <h2 id="form-title" class="visually-hidden"><?php echo e(__('contact_2')); ?></h2>
+
+                <div class="d-flex flex-column row-gap-5">
+                    <div class="form-group border-bottom">
+                        <label class="form-label" for="name"><?php echo e(__('contact_3')); ?></label>
+                        <input id="name" name="name" type="text" autocomplete="name"
+                            class="form-control form-control-lg rounded-0 text-reset bg-transparent border-0 px-0 shadow-none"
+                            placeholder="<?php echo e(__('contact_placeholder_name')); ?>" value="<?php echo e(old('name')); ?>" required>
+                    </div>
+                    <div class="form-group border-bottom">
+                        <label class="form-label" for="email"><?php echo e(__('contact_11')); ?></label>
+                        <input id="email" name="email" type="email" autocomplete="email"
+                            class="form-control form-control-lg rounded-0 text-reset bg-transparent border-0 px-0 shadow-none"
+                            placeholder="<?php echo e(__('contact_placeholder_email')); ?>" value="<?php echo e(old('email')); ?>" required>
+                    </div>
+                    <div class="form-group border-bottom">
+                        <label class="form-label" for="phone"><?php echo e(__('contact_phone')); ?></label>
+                        <input id="phone" name="phone" type="tel" autocomplete="tel"
+                            class="form-control form-control-lg rounded-0 text-reset bg-transparent border-0 px-0 shadow-none"
+                            placeholder="<?php echo e(__('contact_placeholder_phone')); ?>" value="<?php echo e(old('phone')); ?>">
+                    </div>
+                    <div class="form-group border-bottom">
+                        <label class="form-label" for="subject"><?php echo e(__('contact_4')); ?></label>
+                        <input id="subject" name="subject" type="text"
+                            class="form-control form-control-lg rounded-0 text-reset bg-transparent border-0 px-0 shadow-none"
+                            placeholder="<?php echo e(__('contact_placeholder_subject')); ?>" value="<?php echo e(old('subject')); ?>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label visually-hidden" for="message"><?php echo e(__('contact_5')); ?></label>
+                        <textarea name="message" id="message" rows="5"
+                            class="form-control form-control-lg rounded-0 text-reset bg-transparent border-0 px-0 shadow-none"
+                            placeholder="<?php echo e(__('contact_placeholder_message')); ?>" required><?php echo e(old('message')); ?></textarea>
+                    </div>
+                    <div class="form-group border-bottom pb-3">
+                        <label class="form-label fw-bold mb-2"><?php echo e(__('contact_verification')); ?></label>
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            <canvas id="captcha-canvas" width="160" height="52"
+                                style="border:1px solid currentColor; border-radius:4px; cursor:pointer;"
+                                data-n1="<?php echo e($num1); ?>" data-n2="<?php echo e($num2); ?>"
+                                title="Click to refresh"></canvas>
+                            <button type="button" id="captcha-refresh" class="btn p-0 border-0 bg-transparent opacity-75-hover" title="Refresh CAPTCHA" aria-label="Refresh CAPTCHA">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" fill="currentColor" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                                </svg>
+                            </button>
+                            <input id="captcha" name="captcha" type="number"
+                                class="form-control form-control-lg rounded-0 text-reset bg-transparent border-0 border-bottom px-0 shadow-none text-center"
+                                style="max-width:80px;"
+                                placeholder="?" required autocomplete="off">
+                        </div>
+                        <?php $__errorArgs = ['captcha'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger small mt-1"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-invert float-end px-4 px-xl-5">
+                            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512" width="1em" height="1em">
+                                <path fill="currentColor"
+                                    d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480l0-83.6c0-4 1.5-7.8 4.2-10.8L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z">
+                                </path>
+                            </svg>
+                            <?php echo e(__('contact_6')); ?>
+
+                            <span class="visually-hidden">
+                                <?php echo e(__('contact_6')); ?>
+
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <hr class="my-5 opacity-100">
+
+            <address class="pt-lg-5 d-flex flex-column row-gap-5 d-lg-grid text-start" style="grid-template-columns: 1fr auto 1fr auto 1fr;">
+
+                <div>
+                    <h3 class="fs-5 text-capitalize mb-4">PT. Indraco Global Indonesia</h3>
+                    <p class="mb-0" style="max-width: 350px">
+                        <a href="https://maps.app.goo.gl/vLD5kH5WLryYcZwy6" target="_blank"
+                            class="text-reset text-decoration-none">Jl. Semeru No. 133-135 Bambe, Kec. Driyorejo. Gresik
+                            61177
+                            Jawa Timur - Indonesia</a>
+                        <br><br>
+                        <b>T</b>. <a href="tel:+62317668777" target="_blank" class="text-reset text-decoration-none">+62
+                            31
+                            766 8777</a>
+                        <br>
+                        <b>T</b>. <a href="tel:+62317667388" target="_blank" class="text-reset text-decoration-none">+62
+                            31
+                            766 7388</a>
+                        <br>
+                        <b>F</b>. <a href="fax:+62317669590" target="_blank" class="text-reset text-decoration-none">+62
+                            31
+                            766 9590</a>
+                        <br>
+                        <b>E</b>. <a href="mailto:info@indraco.com" target="_blank"
+                            class="text-reset text-decoration-none">info@indraco.com</a>
+                        <br><br>
+                        <a href="https://indracocoffee.com" target="_blank" class="text-reset text-decoration-none">www.indracocoffee.com</a>
+                    </p>
+                </div>
+
+                <div class="d-none d-lg-block vr mx-5"></div>
+
+                <div>
+                    <h5 class="fs-5 text-capitalize mb-4">
+                        <?php echo e(__('contact_7')); ?>
+
+                    </h5>
+                    <ul class="mb-0">
+                        <li>
+                            General Trade : <a href="mailto:getra@indraco.com"
+                                class="text-reset text-decoration-none">getra@indraco.com</a>
+                        </li>
+                        <li>
+                            Modern Trade : <a href="mailto:motra@indraco.com"
+                                class="text-reset text-decoration-none">motra@indraco.com</a>
+                        </li>
+                        <li>
+                            E-commerce : <a href="mailto:ecom@indraco.com"
+                                class="text-reset text-decoration-none">ecom@indraco.com</a>
+                        </li>
+                        <li>
+                            Food Service : <a href="mailto:fopro@indraco.com"
+                                class="text-reset text-decoration-none">fopro@indraco.com</a>
+                        </li>
+                        <li>
+                            F&amp;B Services : <a href="mailto:fobev@indraco.com"
+                                class="text-reset text-decoration-none">fobev@indraco.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="d-none d-lg-block vr mx-5"></div>
+
+                <div>
+                    <h5 class="fs-5 text-capitalize mb-4">
+                        <?php echo e(__('contact_8')); ?>
+
+                    </h5>
+                    <ul class="mb-0">
+                        <li>
+                            <?php echo e(__('contact_8')); ?> : <a href="mailto:inbus@indraco.com"
+                                class="text-reset text-decoration-none">inbus@indraco.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </address>
+        </div>
+    </div>
+</main>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+<script>
+(function () {
+    function drawCaptcha(canvas) {
+        var n1 = parseInt(canvas.dataset.n1);
+        var n2 = parseInt(canvas.dataset.n2);
+        var ctx = canvas.getContext('2d');
+        var w = canvas.width, h = canvas.height;
+
+        // Clear
+        ctx.clearRect(0, 0, w, h);
+
+        // Background: subtle noise
+        var isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+        ctx.fillStyle = isDark ? '#2a2a2a' : '#f8f8f8';
+        ctx.fillRect(0, 0, w, h);
+
+        // Noise lines
+        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+        for (var i = 0; i < 6; i++) {
+            ctx.beginPath();
+            ctx.moveTo(Math.random() * w, Math.random() * h);
+            ctx.lineTo(Math.random() * w, Math.random() * h);
+            ctx.stroke();
+        }
+
+        // Noise dots
+        for (var j = 0; j < 30; j++) {
+            ctx.fillStyle = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+            ctx.fillRect(Math.random() * w, Math.random() * h, 2, 2);
+        }
+
+        // Text
+        var text = n1 + ' + ' + n2 + ' = ?';
+        ctx.font = 'bold 22px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // Slight shadow
+        ctx.shadowColor = isDark ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.15)';
+        ctx.shadowBlur = 2;
+
+        // Random slight rotation per character for harder bot reading
+        ctx.save();
+        ctx.translate(w / 2, h / 2);
+        ctx.rotate((Math.random() - 0.5) * 0.08);
+        ctx.fillStyle = isDark ? '#e0e0e0' : '#222222';
+        ctx.fillText(text, 0, 0);
+        ctx.restore();
+    }
+
+    var canvas = document.getElementById('captcha-canvas');
+    if (!canvas) return;
+
+    drawCaptcha(canvas);
+
+    // Click or refresh button to redraw (visual only — same numbers, just redraws)
+    var refreshBtn = document.getElementById('captcha-refresh');
+    [canvas, refreshBtn].forEach(function (el) {
+        if (el) el.addEventListener('click', function () { drawCaptcha(canvas); });
+    });
+
+    // Redraw when theme changes
+    var observer = new MutationObserver(function () { drawCaptcha(canvas); });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+})();
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/u1313327/public_html/beta.indracocoffee.com/resources/views/pages/contact.blade.php ENDPATH**/ ?>
