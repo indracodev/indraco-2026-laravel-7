@@ -1,6 +1,6 @@
-# Indraco 2026 - Laravel Migration Project
+# Indraco 2026 - Laravel Migration Project (v7)
 
-Proyek ini adalah migrasi dari website Indraco 2026 (Vanilla PHP) ke framework Laravel 10.
+Proyek ini adalah migrasi dari website Indraco 2026 (Vanilla PHP) ke framework Laravel 7.
 
 ## 🚦 Route Comparison Analysis
 
@@ -41,8 +41,25 @@ Berdasarkan referensi dari `indraco-2026-php/route-url.md`, berikut adalah statu
 
 ---
 
+## 🔍 SEO & Google Settings
+
+Website ini mendukung konfigurasi SEO dinamis yang dapat dikelola melalui menu **Admin > Pengaturan Situs**.
+
+| Key | Fungsi |
+| :--- | :--- |
+| `seo_title` | Title tag global website. |
+| `seo_description` | Meta description global website. |
+| `seo_keywords` | Kata kunci global (pisahkan dengan koma). |
+| `seo_og_image` | Path gambar untuk sharing (Facebook/WA). |
+| `google_analytics_id` | ID Tracking Google Analytics (UA-xxx atau G-xxx). |
+| `google_site_verification` | Kode verifikasi Google Search Console. |
+
+*Perubahan pada pengaturan ini akan langsung menghapus cache `site_settings` dan memperbarui tampilan frontend.*
+
+---
+
 ## 🛠️ Tech Stack
-- **Framework:** Laravel 10
+- **Framework:** Laravel 7
 - **Database:** MySQL (Shared with PHP version)
 - **Frontend Assets:** Vite, Bootstrap 5, GSAP (ScrollTrigger)
 - **Architecture:** Blade Templating with View Composers
