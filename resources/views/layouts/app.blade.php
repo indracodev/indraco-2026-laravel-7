@@ -6,6 +6,7 @@ data-bs-theme="@yield('html_theme')"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- SEO Settings --}}
     <meta name="description" content="@yield('meta_description', $settings['seo_description'] ?? 'INDRACO adalah perusahaan FMCG terkemuka di Indonesia sejak 1971, menghadirkan berbagai produk berkualitas seperti kopi, teh, jahe, dan cokelat.')">
@@ -78,6 +79,7 @@ data-bs-theme="@yield('html_theme')"
     <!-- Custom JS -->
     <script src="{{ asset('js/theme.js') }}"></script>
     <script src="{{ asset('js/frontend.js') }}"></script>
+    <script src="{{ asset('js/traffic-tracker.js') }}"></script>
 
     @yield('scripts')
 
