@@ -80,5 +80,14 @@ Route::prefix('admin')->group(function () {
         // Translations Management Route
         Route::get('translations', [\App\Http\Controllers\Admin\TranslationController::class, 'index']);
         Route::put('translations', [\App\Http\Controllers\Admin\TranslationController::class, 'update']);
+
+        // Traffic Analytics Routes
+        Route::get('traffic', [\App\Http\Controllers\Admin\TrafficAnalyticsController::class, 'index'])->name('admin.traffic.index');
+        Route::get('traffic/audience', [\App\Http\Controllers\Admin\TrafficAnalyticsController::class, 'audience'])->name('admin.traffic.audience');
+        Route::get('traffic/geo', [\App\Http\Controllers\Admin\TrafficAnalyticsController::class, 'geo'])->name('admin.traffic.geo');
+        Route::get('traffic/behavior', [\App\Http\Controllers\Admin\TrafficAnalyticsController::class, 'behavior'])->name('admin.traffic.behavior');
+        Route::post('traffic/event', [\App\Http\Controllers\Admin\TrafficAnalyticsController::class, 'trackEvent'])->name('admin.traffic.event');
+        Route::post('traffic/purge', [\App\Http\Controllers\Admin\TrafficAnalyticsController::class, 'purge'])->name('admin.traffic.purge');
+        Route::delete('traffic/{id}', [\App\Http\Controllers\Admin\TrafficAnalyticsController::class, 'destroy'])->name('admin.traffic.destroy');
     });
 });

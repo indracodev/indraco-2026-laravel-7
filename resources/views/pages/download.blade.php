@@ -18,7 +18,7 @@
                         <div class="w-50 p-4">
                             <h2 class="fs-4 text-capitalize lh-1">INDRACO</h2>
                             <p class="text-capitalize">{{ __('download_company_profile') }}</p>
-                            <a href="https://indraco.com/brosur/Company Profile Indraco.pdf" target="_blank" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
+                            <a href="https://indraco.com/brosur/Company Profile Indraco.pdf" target="_blank" data-track="download" data-name="Company Profile Indraco" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
                         </div>
                     </article>
                 </li>
@@ -33,7 +33,7 @@
                         <div class="w-50 p-4">
                             <h2 class="fs-4 text-capitalize lh-1">supresso</h2>
                             <p class="text-capitalize">{{ __('download_product_spec') }}</p>
-                            <a href="https://indraco.com/brosur/BROCHURE CATALOG SPECIFICATION SUPRESSO NEW.pdf" target="_blank" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
+                            <a href="https://indraco.com/brosur/BROCHURE CATALOG SPECIFICATION SUPRESSO NEW.pdf" target="_blank" data-track="download" data-name="Supresso Product Specification" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
                         </div>
                     </article>
                 </li>
@@ -48,7 +48,7 @@
                         <div class="w-50 p-4">
                             <h2 class="fs-4 text-capitalize lh-1">UCAFÉ</h2>
                             <p class="text-capitalize">{{ __('download_product_spec') }}</p>
-                            <a href="https://indraco.com/brosur/Catalog Supresso UCAFE.pdf" target="_blank" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
+                            <a href="https://indraco.com/brosur/Catalog Supresso UCAFE.pdf" target="_blank" data-track="download" data-name="UCAFE Product Specification" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
                         </div>
                     </article>
                 </li>
@@ -63,7 +63,7 @@
                         <div class="w-50 p-4">
                             <h2 class="fs-4 text-capitalize lh-1">BROCHOCO</h2>
                             <p class="text-capitalize">{{ __('download_product_spec') }}</p>
-                            <a href="https://indraco.com/brosur/Catalog BROCHOCO.pdf" target="_blank" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
+                            <a href="https://indraco.com/brosur/Catalog BROCHOCO.pdf" target="_blank" data-track="download" data-name="BROCHOCO Product Specification" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
                         </div>
                     </article>
                 </li>
@@ -78,7 +78,7 @@
                         <div class="w-50 p-4">
                             <h2 class="fs-4 text-capitalize lh-1">jaheku</h2>
                             <p class="text-capitalize">{{ __('download_product_spec') }}</p>
-                            <a href="https://indraco.com/brosur/Catalog Jaheku.pdf" target="_blank" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
+                            <a href="https://indraco.com/brosur/Catalog Jaheku.pdf" target="_blank" data-track="download" data-name="Jaheku Product Specification" class="btn btn-outline-invert rounded-0 text-capitalize">{{ __('download_btn') }}</a>
                         </div>
                     </article>
                 </li>
