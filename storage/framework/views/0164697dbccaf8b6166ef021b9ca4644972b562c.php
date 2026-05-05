@@ -51,7 +51,7 @@
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-3 g-sm-4 g-md-5">
                         <?php $__currentLoopData = $brands['coffee']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col">
-                            <a href="<?php echo e(route($brand->slug == 'supresso' ? 'product.supresso' : 'product.indraco', $brand->slug)); ?>" class="text-reset text-decoration-none opacity-100">
+                            <a href="<?php echo e(route('products.show', $brand->slug)); ?>" class="text-reset text-decoration-none opacity-100">
                                 <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                     <img src="<?php echo e(asset($brand->logo_path)); ?>" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="<?php echo e($brand->name); ?>" loading="lazy">
                                 </article>
@@ -75,7 +75,7 @@
                         ?>
                         <?php $__currentLoopData = $others; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col">
-                            <a href="<?php echo e(route('product.indraco', $brand->slug)); ?>" class="text-reset text-decoration-none opacity-100">
+                            <a href="<?php echo e(route('products.show', $brand->slug)); ?>" class="text-reset text-decoration-none opacity-100">
                                 <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
                                     <img src="<?php echo e(asset($brand->logo_path)); ?>" class="theme-image object-fit-contain w-50 h-50 top-50 start-50 translate-middle" alt="<?php echo e($brand->name); ?>" loading="lazy">
                                 </article>

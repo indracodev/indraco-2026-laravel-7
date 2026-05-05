@@ -42,8 +42,8 @@
                     <ul class="list-unstyled mb-0">
                         <?php $__currentLoopData = $news; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
-                            <a href="<?php echo e(route('news.show', ['slug' => $item->slug, 'page' => request()->get('page')])); ?>" class="text-reset text-decoration-none opacity-75-hover text-start">
-                                <h3 class="fs-5 text-capitalize text-2-line <?php echo e(isset($current) && $current->id == $item->id ? 'fw-bold text-primary' : ''); ?>">
+                            <a href="<?php echo e(route('news.show', $item->slug)); ?>" class="text-reset text-decoration-none opacity-75-hover text-start <?php echo e(isset($current) && $current->id == $item->id ? 'fw-bold' : ''); ?>">
+                                <h3 class="fs-5 text-capitalize text-2-line">
                                     <?php echo e($item->translated_title); ?>
 
                                 </h3>
@@ -56,7 +56,7 @@
                         <li><hr></li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
-                    <div class="mt-4 custom-pagination">
+                    <div class="mt-4">
                         <?php echo e($news->links()); ?>
 
                     </div>
@@ -67,4 +67,4 @@
 </main>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/u1313327/public_html/beta.indracocoffee.com/resources/views/news/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\indraco-2026-laravel-7\resources\views/news/index.blade.php ENDPATH**/ ?>

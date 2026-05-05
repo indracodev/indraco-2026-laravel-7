@@ -38,9 +38,9 @@
              <ul class="list-unstyled mb-0 d-none d-lg-flex flex-wrap gap-3 ms-auto small align-items-center">
                 <li><a href="https://indracostore.com/" target="_blank" class="text-reset text-decoration-none opacity-75-hover">INDRACO Store</a></li>
                 <li class="vr"></li>
-                <li><a href="<?php echo e(route('lang.switch', 'en')); ?>" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'en' ? '' : 'opacity-50'); ?>"><img src="<?php echo e(asset('images/flags/us.svg')); ?>" alt="EN" style="width: 20px; height: auto;" class="me-1"> <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>">English</span></a></li>
+                <li><a href="<?php echo e(route('lang.switch', 'en')); ?>" data-lang="en" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'en' ? '' : 'opacity-50'); ?>"><img src="<?php echo e(asset('images/flags/us.svg')); ?>" alt="EN" style="width: 20px; height: auto;" class="me-1"> <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>">English</span></a></li>
                 <li class="vr"></li>
-                <li><a href="<?php echo e(route('lang.switch', 'id')); ?>" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'id' ? '' : 'opacity-50'); ?>"><img src="<?php echo e(asset('images/flags/id.svg')); ?>" alt="ID" style="width: 20px; height: auto;" class="me-1"> <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>">Indonesia</span></a></li>
+                <li><a href="<?php echo e(route('lang.switch', 'id')); ?>" data-lang="id" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'id' ? '' : 'opacity-50'); ?>"><img src="<?php echo e(asset('images/flags/id.svg')); ?>" alt="ID" style="width: 20px; height: auto;" class="me-1"> <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>">Indonesia</span></a></li>
              </ul>
           </div>
           <div class="navbar-bawah w-100 d-none d-lg-flex align-items-lg-center column-gap-lg-5">
@@ -105,9 +105,8 @@
                                                         <?php if($cat->slug === 'produk-konsumen'): ?>
                                                             <?php
                                                                 $ms = str_replace('consumer-', '', $sub->slug);
-                                                                $href = str_contains($sub->slug,'supresso') ? route('product.supresso',$ms) : route('product.indraco',$ms);
                                                             ?>
-                                                            <a href="<?php echo e($href); ?>" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover <?php echo e($subIndex === 0 ? 'active' : ''); ?>" id="tab-link-<?php echo e($sub->slug); ?>" data-bs-toggle="pill" data-bs-target="#tab-pane-<?php echo e($sub->slug); ?>" data-i18n="<?php echo e($lk); ?>"><?php echo e(__($lk)); ?></a>
+                                                            <a href="<?php echo e(route('products.show', $ms)); ?>" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover <?php echo e($subIndex === 0 ? 'active' : ''); ?>" id="tab-link-<?php echo e($sub->slug); ?>" data-bs-toggle="pill" data-bs-target="#tab-pane-<?php echo e($sub->slug); ?>" data-i18n="<?php echo e($lk); ?>"><?php echo e(__($lk)); ?></a>
                                                         <?php else: ?>
                                                             <button type="button" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover <?php echo e($subIndex === 0 ? 'active' : ''); ?>" id="tab-link-<?php echo e($sub->slug); ?>" data-bs-toggle="pill" data-bs-target="#tab-pane-<?php echo e($sub->slug); ?>" role="tab" aria-selected="<?php echo e($subIndex === 0 ? 'true' : 'false'); ?>" data-i18n="<?php echo e($lk); ?>"><?php echo e(__($lk)); ?></button>
                                                         <?php endif; ?>
@@ -244,7 +243,19 @@
                 </button>
                 <button type="button" class="theme-toggle">
                    <svg aria-hidden="true" class="theme-icon" width="1.25em" height="1.25em" viewBox="0 0 24 24" fill="none">
-                      <g class="icon-sun"><circle cx="12" cy="12" r="5" fill="currentColor"></circle></g>
+                      <g class="icon-sun">
+                        <circle cx="12" cy="12" r="5" fill="currentColor"></circle>
+                        <g stroke="currentColor" stroke-width="2">
+                           <line x1="12" y1="1" x2="12" y2="4"></line>
+                           <line x1="12" y1="20" x2="12" y2="23"></line>
+                           <line x1="1" y1="12" x2="4" y2="12"></line>
+                           <line x1="20" y1="12" x2="23" y2="12"></line>
+                           <line x1="4.2" y1="4.2" x2="6.3" y2="6.3"></line>
+                           <line x1="17.7" y1="17.7" x2="19.8" y2="19.8"></line>
+                           <line x1="4.2" y1="19.8" x2="6.3" y2="17.7"></line>
+                           <line x1="17.7" y1="6.3" x2="19.8" y2="4.2"></line>
+                        </g>
+                     </g>
                       <g class="icon-moon"><path d="M21 12.8A9 9 0 1111.2 3 a7 7 0 109.8 9.8z" fill="currentColor"></path></g>
                    </svg>
                 </button>

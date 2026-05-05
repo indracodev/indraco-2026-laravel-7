@@ -26,10 +26,10 @@
                                     <li class="nav-item">
                                        <?php
                                           $brand_slug = str_replace('consumer-', '', $sub->slug);
-                                          $brand_route = (str_contains($sub->slug, 'supresso')) ? 'product.supresso' : 'product.indraco';
+                                          
                                           $lk = ['consumer-supresso'=>'nav_supresso','consumer-tugu-buaya'=>'nav_tugu_buaya','consumer-rasa-sayang'=>'nav_rasa_sayang','consumer-jaheku'=>'nav_jaheku','consumer-brochoco'=>'nav_brochoco','consumer-intirasa'=>'nav_intirasa','consumer-hao-cafe'=>'nav_hao_cafe','consumer-ucafe'=>'nav_ucafe','consumer-balicafe'=>'nav_balicafe','consumer-uang-emas'=>'nav_uang_emas'][$sub->slug] ?? ('nav_' . str_replace('-','_',$sub->slug));
                                        ?>
-                                       <a href="<?php echo e(route($brand_route, $brand_slug)); ?>" class="nav-link text-reset opacity-75-hover px-0" data-i18n="<?php echo e($lk); ?>"><?php echo e(__($lk)); ?></a>
+                                       <a href="<?php echo e(route('products.show', $brand_slug)); ?>" class="nav-link text-reset opacity-75-hover px-0" data-i18n="<?php echo e($lk); ?>"><?php echo e(__($lk)); ?></a>
                                     </li>
                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                               <?php endif; ?>
@@ -73,10 +73,10 @@
             <a href="https://indracostore.com/" target="_blank" class="nav-link text-reset opacity-75-hover px-0">INDRACO Store</a>
          </li>
          <li class="nav-item">
-            <a href="<?php echo e(route('lang.switch', 'en')); ?>" class="nav-link text-reset opacity-75-hover px-0 <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>"><img src="<?php echo e(asset('images/flags/us.svg')); ?>" alt="EN" style="width: 20px; height: auto;" class="me-1"> English</a>
+            <a href="<?php echo e(route('lang.switch', 'en')); ?>" data-lang="en" class="nav-link text-reset opacity-75-hover px-0 lang-toggler <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>"><img src="<?php echo e(asset('images/flags/us.svg')); ?>" alt="EN" style="width: 20px; height: auto;" class="me-1"> English</a>
          </li>
          <li class="nav-item">
-            <a href="<?php echo e(route('lang.switch', 'id')); ?>" class="nav-link text-reset opacity-75-hover px-0 <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>"><img src="<?php echo e(asset('images/flags/id.svg')); ?>" alt="ID" style="width: 20px; height: auto;" class="me-1"> Indonesia</a>
+            <a href="<?php echo e(route('lang.switch', 'id')); ?>" data-lang="id" class="nav-link text-reset opacity-75-hover px-0 lang-toggler <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>"><img src="<?php echo e(asset('images/flags/id.svg')); ?>" alt="ID" style="width: 20px; height: auto;" class="me-1"> Indonesia</a>
          </li>
       </ul>
    </div>
