@@ -38,9 +38,9 @@
              <ul class="list-unstyled mb-0 d-none d-lg-flex flex-wrap gap-3 ms-auto small align-items-center">
                 <li><a href="https://indracostore.com/" target="_blank" class="text-reset text-decoration-none opacity-75-hover">INDRACO Store</a></li>
                 <li class="vr"></li>
-                <li><a href="<?php echo e(route('lang.switch', 'en')); ?>" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'en' ? '' : 'opacity-50'); ?>">&#x1f1fa;&#x1f1f8; <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>">English</span></a></li>
+                <li><a href="<?php echo e(route('lang.switch', 'en')); ?>" data-lang="en" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'en' ? '' : 'opacity-50'); ?>"><img src="<?php echo e(asset('images/flags/us.svg')); ?>" alt="EN" style="width: 20px; height: auto;" class="me-1"> <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>">English</span></a></li>
                 <li class="vr"></li>
-                <li><a href="<?php echo e(route('lang.switch', 'id')); ?>" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'id' ? '' : 'opacity-50'); ?>">&#x1F1EE;&#x1F1E9; <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>">Indonesia</span></a></li>
+                <li><a href="<?php echo e(route('lang.switch', 'id')); ?>" data-lang="id" class="text-reset text-decoration-none lang-toggler <?php echo e(app()->getLocale() == 'id' ? '' : 'opacity-50'); ?>"><img src="<?php echo e(asset('images/flags/id.svg')); ?>" alt="ID" style="width: 20px; height: auto;" class="me-1"> <span class="opacity-75-hover <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>">Indonesia</span></a></li>
              </ul>
           </div>
           <div class="navbar-bawah w-100 d-none d-lg-flex align-items-lg-center column-gap-lg-5">
@@ -253,4 +253,4 @@
        </div>
     </nav>
 </header>
-<?php /**PATH C:\laragon\www\#indraco\indraco-2026\indraco-2026-laravel-7\resources\views/partials/header.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laragon\www\indraco-2026-laravel-7\resources\views/partials/header.blade.php ENDPATH**/ ?>

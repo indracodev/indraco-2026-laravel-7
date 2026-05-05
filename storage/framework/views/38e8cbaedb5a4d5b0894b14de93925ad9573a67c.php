@@ -73,12 +73,12 @@
             <a href="https://indracostore.com/" target="_blank" class="nav-link text-reset opacity-75-hover px-0">INDRACO Store</a>
          </li>
          <li class="nav-item">
-            <a href="<?php echo e(route('lang.switch', 'en')); ?>" class="nav-link text-reset opacity-75-hover px-0 <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>">&#x1f1fa;&#x1f1f8; English</a>
+            <a href="<?php echo e(route('lang.switch', 'en')); ?>" data-lang="en" class="nav-link text-reset opacity-75-hover px-0 lang-toggler <?php echo e(app()->getLocale() == 'en' ? 'fw-bold' : ''); ?>"><img src="<?php echo e(asset('images/flags/us.svg')); ?>" alt="EN" style="width: 20px; height: auto;" class="me-1"> English</a>
          </li>
          <li class="nav-item">
-            <a href="<?php echo e(route('lang.switch', 'id')); ?>" class="nav-link text-reset opacity-75-hover px-0 <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>">&#x1F1EE;&#x1F1E9; Indonesia</a>
+            <a href="<?php echo e(route('lang.switch', 'id')); ?>" data-lang="id" class="nav-link text-reset opacity-75-hover px-0 lang-toggler <?php echo e(app()->getLocale() == 'id' ? 'fw-bold' : ''); ?>"><img src="<?php echo e(asset('images/flags/id.svg')); ?>" alt="ID" style="width: 20px; height: auto;" class="me-1"> Indonesia</a>
          </li>
       </ul>
    </div>
 </aside>
-<?php /**PATH C:\laragon\www\#indraco\indraco-2026\indraco-2026-laravel-7\resources\views/partials/menu_mobile.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laragon\www\indraco-2026-laravel-7\resources\views/partials/menu_mobile.blade.php ENDPATH**/ ?>

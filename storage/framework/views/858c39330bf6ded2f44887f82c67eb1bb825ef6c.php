@@ -4,12 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?php echo $__env->yieldContent('meta_description', 'INDRACO adalah perusahaan FMCG terkemuka di Indonesia sejak 1971, menghadirkan berbagai produk berkualitas seperti kopi, teh, jahe, dan cokelat.'); ?>">
     
-    <meta property="og:title" content="<?php echo $__env->yieldContent('og_title', 'INDRACO – Indonesia Leading FMCG Company Since 1971'); ?>">
-    <meta property="og:description" content="<?php echo $__env->yieldContent('og_description', 'Perusahaan kopi dan produk konsumen Indonesia sejak 1971.'); ?>">
-    <meta property="og:image" content="<?php echo $__env->yieldContent('og_image', asset('images/og-image.jpg')); ?>">
+    
+    <meta name="description" content="<?php echo $__env->yieldContent('meta_description', $settings['seo_description'] ?? 'INDRACO adalah perusahaan FMCG terkemuka di Indonesia sejak 1971, menghadirkan berbagai produk berkualitas seperti kopi, teh, jahe, dan cokelat.'); ?>">
+    <meta name="keywords" content="<?php echo $__env->yieldContent('meta_keywords', $settings['seo_keywords'] ?? 'indraco, fmcg indonesia, kopi indonesia'); ?>">
+    <?php if(!empty($settings['google_site_verification'])): ?>
+    <meta name="google-site-verification" content="<?php echo e($settings['google_site_verification']); ?>" />
+    <?php endif; ?>
+
+    
+    <meta property="og:title" content="<?php echo $__env->yieldContent('og_title', $settings['seo_title'] ?? 'INDRACO – Indonesia Leading FMCG Company Since 1971'); ?>">
+    <meta property="og:description" content="<?php echo $__env->yieldContent('og_description', $settings['seo_description'] ?? 'Perusahaan kopi dan produk konsumen Indonesia sejak 1971.'); ?>">
+    <meta property="og:image" content="<?php echo $__env->yieldContent('og_image', asset($settings['seo_og_image'] ?? 'images/og-image.jpg')); ?>">
     <meta property="og:type" content="website">
+    
+    
+    <?php if(!empty($settings['google_analytics_id'])): ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo e($settings['google_analytics_id']); ?>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<?php echo e($settings['google_analytics_id']); ?>');
+    </script>
+    <?php endif; ?>
     
     <link rel="shortcut icon" href="<?php echo e(asset('images/icon-indraco.ico')); ?>" type="image/x-icon">
     
@@ -27,7 +45,7 @@
     
     <?php echo $__env->yieldContent('styles'); ?>
     
-    <title><?php echo $__env->yieldContent('title', 'Perusahaan FMCG Terkemuka di Indonesia Sejak 1971 – INDRACO'); ?></title>
+    <title><?php echo $__env->yieldContent('title', $settings['seo_title'] ?? 'Perusahaan FMCG Terkemuka di Indonesia Sejak 1971 – INDRACO'); ?></title>
 </head>
 
 <body>
@@ -163,4 +181,4 @@
     <?php endif; ?>
 </body>
 </html>
-<?php /**PATH C:\laragon\www\#indraco\indraco-2026\indraco-2026-laravel-7\resources\views/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laragon\www\indraco-2026-laravel-7\resources\views/layouts/app.blade.php ENDPATH**/ ?>

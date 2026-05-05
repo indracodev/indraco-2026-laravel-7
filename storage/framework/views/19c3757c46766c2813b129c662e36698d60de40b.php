@@ -128,4 +128,4 @@
     </div>
 
 </div>
-<?php /**PATH C:\laragon\www\#indraco\indraco-2026\indraco-2026-laravel-7\resources\views/partials/nav-equipment.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\laragon\www\indraco-2026-laravel-7\resources\views/partials/nav-equipment.blade.php ENDPATH**/ ?>
