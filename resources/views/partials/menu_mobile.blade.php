@@ -26,10 +26,10 @@
                                     <li class="nav-item">
                                        @php
                                           $brand_slug = str_replace('consumer-', '', $sub->slug);
-                                          $brand_route = (str_contains($sub->slug, 'supresso')) ? 'product.supresso' : 'product.indraco';
+                                          
                                           $lk = ['consumer-supresso'=>'nav_supresso','consumer-tugu-buaya'=>'nav_tugu_buaya','consumer-rasa-sayang'=>'nav_rasa_sayang','consumer-jaheku'=>'nav_jaheku','consumer-brochoco'=>'nav_brochoco','consumer-intirasa'=>'nav_intirasa','consumer-hao-cafe'=>'nav_hao_cafe','consumer-ucafe'=>'nav_ucafe','consumer-balicafe'=>'nav_balicafe','consumer-uang-emas'=>'nav_uang_emas'][$sub->slug] ?? ('nav_' . str_replace('-','_',$sub->slug));
                                        @endphp
-                                       <a href="{{ route($brand_route, $brand_slug) }}" class="nav-link text-reset opacity-75-hover px-0" data-i18n="{{ $lk }}">{{ __($lk) }}</a>
+                                       <a href="{{ route('products.show', $brand_slug) }}" class="nav-link text-reset opacity-75-hover px-0" data-i18n="{{ $lk }}">{{ __($lk) }}</a>
                                     </li>
                                  @endforeach
                               @endif
