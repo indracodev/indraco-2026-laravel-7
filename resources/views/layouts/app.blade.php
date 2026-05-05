@@ -37,6 +37,21 @@ data-bs-theme="@yield('html_theme')"
         </script>
     @endif
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E71YZSYCS8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-E71YZSYCS8');
+    </script>
+
+
+
     <link rel="shortcut icon" href="{{ asset('images/icon-indraco.ico') }}" type="image/x-icon">
 
     <!-- Vendor CSS -->
