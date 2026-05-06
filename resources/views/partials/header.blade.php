@@ -175,7 +175,7 @@
                                  <div class="d-flex column-gap-4">
                                     <div class="nav flex-column nav-pills" role="tablist">
                                        <button type="button" onclick="window.open('https://supresso.com/', '_blank')" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover active" id="tab-link-store-ecommerce-supresso" data-bs-toggle="pill" data-bs-target="#tab-pane-store-ecommerce-supresso" aria-selected="true">Supresso</button>
-                                       <button type="button" onclick="window.open('https://indracostore.com/', '_blank')" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover" id="tab-link-store-ecommerce-indracostore" data-bs-toggle="pill" data-bs-target="#tab-pane-store-ecommerce-indracostore" aria-selected="false">INDRACO store</button>
+                                       <button type="button" onclick="window.open('https://indracostore.com/', '_blank')" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover" id="tab-link-store-ecommerce-indracostore" data-bs-toggle="pill" data-bs-target="#tab-pane-store-ecommerce-indracostore" aria-selected="false">INDRACO Store</button>
                                     </div>
                                     <div class="vr"></div>
                                     <div class="tab-content">
