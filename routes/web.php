@@ -17,6 +17,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::get('/products/search/{query}', [ProductController::class, 'search'])->name('products.search');
+Route::get('/api/products/suggestions', [ProductController::class, 'suggestions'])->name('api.products.suggestions');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
 // News

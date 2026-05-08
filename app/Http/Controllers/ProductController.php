@@ -117,4 +117,40 @@ class ProductController extends Controller
             'brand', 'collections', 'variants', 'collectionId', 'isKraton'
         ));
     }
+
+    public function search($query)
+    {
+        // Ubah tanda hubung kembali menjadi spasi untuk pencarian database
+        $searchQuery = str_replace('-', ' ', $query);
+
+        $products = Product::where('status', 'active')
+            ->where('is_deleted', 0)
+            ->where(function($q) use ($searchQuery) {
+                $q->where('nama_produk', 'LIKE', "%{$searchQuery}%")
+                  ->orWhere('sku', 'LIKE', "%{$searchQuery}%")
+                  ->orWhere('tipe_packing', 'LIKE', "%{$searchQuery}%")
+                  ->orWhere('inner_kemasan', 'LIKE', "%{$searchQuery}%");
+            })
+            ->get();
+
+        return view('products.search', ['products' => $products, 'query' => $searchQuery]);
+    }
+
+    public function suggestions(Request $request)
+    {
+        $query = $request->get('q');
+        
+        $products = Product::where('status', 'active')
+            ->where('is_deleted', 0)
+            ->where(function($q) use ($query) {
+                $q->where('nama_produk', 'LIKE', "%{$query}%")
+                  ->orWhere('sku', 'LIKE', "%{$query}%")
+                  ->orWhere('tipe_packing', 'LIKE', "%{$query}%")
+                  ->orWhere('inner_kemasan', 'LIKE', "%{$query}%");
+            })
+            ->limit(10)
+            ->get(['id', 'nama_produk', 'slug', 'sku', 'gambar_utama']);
+
+        return response()->json($products);
+    }
 }
