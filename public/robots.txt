@@ -1,2 +1,4 @@
 User-agent: *
-Disallow:
+allow: /
+
+https://indracocoffee.com/sitemap.xml
