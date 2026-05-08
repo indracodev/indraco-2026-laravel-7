@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', ($is_search ?? false ? 'Pencarian: ' . $search_query : $brand->nama_merek) . ' – INDRACO')
+@section('title', ($is_search ?? false ? __('search_breadcrumb') . ': ' . $search_query : $brand->nama_merek) . ' – INDRACO')
 
 @section('content')
 <main id="konten">
-    <h1 class="visually-hidden">halaman produk</h1>
+    <h1 class="visually-hidden">{{ __('product_h1') }}</h1>
 
     <div class="container py-5">
         <div class="py-lg-5">
             <header aria-label="header brand" class="brand-header d-flex flex-column flex-lg-row align-items-lg-center row-gap-5 mb-5">
                 @if($is_search ?? false)
                     <h2 class="display-4 text-capitalize fw-thin order-lg-1 text-center text-lg-start">
-                        <span>Hasil Pencarian</span>: <br> <b class="fw-bold">"{{ $search_query }}"</b>
+                        <span>{{ __('search_result_title') }}</span>: <br> <b class="fw-bold">"{{ $search_query }}"</b>
                     </h2>
                 @else
                     @php
@@ -20,9 +20,9 @@
                     @endphp
                     <img src="{{ asset($logo_img) }}" alt="" loading="lazy" aria-hidden="true" class="theme-image w-75 mx-auto order-lg-2 me-lg-0" style="max-width: 280px;" onerror="this.src='{{ asset('images/logo-tugu-buaya.png') }}'">
                     <h2 class="display-4 text-capitalize fw-thin order-lg-1 text-center text-lg-start">
-                        <span>produk</span> <br>
+                        <span>{{ __('nav_product') }}</span> <br>
                         <b class="fw-bold">
-                            {!! str_replace('Kopi ', 'kopi <br> <b class="fw-bold">', $brand->nama_merek) !!}</b>
+                            {!! str_replace(['Kopi ', 'Coffee '], [__('coffee') . ' ', __('coffee') . ' '], $brand->nama_merek) !!}</b>
                     </h2>
                 @endif
             </header>
@@ -53,7 +53,7 @@
                     </li>
                 @empty
                     <div class="col-12 text-center py-5">
-                        <p class="text-muted">{{ $is_search ?? false ? 'Produk tidak ditemukan.' : 'Produk belum tersedia untuk kategori ini.' }}</p>
+                        <p class="text-muted">{{ $is_search ?? false ? __('search_not_found') : __('brand_empty_desc') }}</p>
                     </div>
                 @endforelse
             </ol>

@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Pencarian: ' . $query . ' – INDRACO')
+@section('title', __('search_breadcrumb') . ': ' . $query . ' – INDRACO')
 
 @section('content')
 <main id="konten">
-    <h1 class="visually-hidden">halaman pencarian produk</h1>
+    <h1 class="visually-hidden">{{ __('search_page_h1') }}</h1>
 
     <div class="container py-5">
         <div class="py-lg-5">
             <header aria-label="header search" class="search-header mb-5">
                 <nav aria-label="breadcrumb" class="mb-4">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none text-muted">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('products') }}" class="text-decoration-none text-muted">Produk</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Pencarian</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none text-muted">{{ __('nav_home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('products') }}" class="text-decoration-none text-muted">{{ __('nav_product') }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('search_breadcrumb') }}</li>
                     </ol>
                 </nav>
                 <h2 class="display-4 text-capitalize fw-thin">
-                    <span>Hasil Pencarian</span>: <br> <b class="fw-bold">"{{ $query }}"</b>
+                    <span>{{ __('search_result_title') }}</span>: <br> <b class="fw-bold">"{{ $query }}"</b>
                 </h2>
-                <p class="text-muted">{{ $products->count() }} produk ditemukan</p>
+                <p class="text-muted">{{ $products->count() }} {{ __('search_found') }}</p>
             </header>
 
             <!-- product list -->
@@ -45,7 +45,7 @@
                                         <p class="card-text small text-muted">{{ $prod->tipe_packing }} ({{ $prod->inner_kemasan }})</p>
                                     @endif
                                     <div class="mt-auto">
-                                        <span class="btn btn-outline-primary btn-sm rounded-pill px-3 mt-2">Lihat Detail</span>
+                                        <span class="btn btn-outline-primary btn-sm rounded-pill px-3 mt-2">{{ __('search_view_detail') }}</span>
                                     </div>
                                 </div>
                             </article>
@@ -55,9 +55,9 @@
                     <div class="col-12 text-center py-5">
                         <div class="bg-light p-5 rounded-5">
                             <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="4em" viewBox="0 0 24 24" class="text-muted mb-3"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14z"/></svg>
-                            <h3 class="fw-bold">Maaf, produk tidak ditemukan</h3>
-                            <p class="text-muted">Coba gunakan kata kunci lain atau periksa ejaan Anda.</p>
-                            <a href="{{ route('products') }}" class="btn btn-primary rounded-pill px-4 mt-3">Kembali ke Produk</a>
+                            <h3 class="fw-bold">{{ __('search_empty_title') }}</h3>
+                            <p class="text-muted">{{ __('search_empty_desc') }}</p>
+                            <a href="{{ route('products') }}" class="btn btn-primary rounded-pill px-4 mt-3">{{ __('search_back_to_products') }}</a>
                         </div>
                     </div>
                 @endforelse
