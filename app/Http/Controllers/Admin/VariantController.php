@@ -66,10 +66,16 @@ class VariantController extends Controller
             'bg_color'    => 'nullable|string|max:20',
             'text_color'  => 'nullable|string|max:20',
             'map_opacity' => 'nullable|numeric|min:0|max:1',
+            'map_size'    => 'nullable|integer',
+            'map_top'     => 'nullable|integer',
+            'map_right'   => 'nullable|integer',
             'sort_order'  => 'nullable|integer',
         ]);
         
         $data['slug'] = Str::slug($data['name']) . '-' . time();
+        $data['description'] = $this->cleanHtml($data['description']);
+        $data['taste'] = $this->cleanHtml($data['taste']);
+        $data['ingredient'] = $this->cleanHtml($data['ingredient']);
 
         // Handle map_image upload
         if ($request->hasFile('map_image')) {
@@ -109,10 +115,16 @@ class VariantController extends Controller
             'bg_color'    => 'nullable|string|max:20',
             'text_color'  => 'nullable|string|max:20',
             'map_opacity' => 'nullable|numeric|min:0|max:1',
+            'map_size'    => 'nullable|integer',
+            'map_top'     => 'nullable|integer',
+            'map_right'   => 'nullable|integer',
             'sort_order'  => 'nullable|integer',
         ]);
         
         $data['slug'] = Str::slug($data['name']);
+        $data['description'] = $this->cleanHtml($data['description']);
+        $data['taste'] = $this->cleanHtml($data['taste']);
+        $data['ingredient'] = $this->cleanHtml($data['ingredient']);
 
         // Handle map_image upload
         if ($request->hasFile('map_image')) {
@@ -134,6 +146,16 @@ class VariantController extends Controller
         
         $variant->update($data);
         return redirect()->back()->with('success', 'Varian berhasil diperbarui.');
+    }
+
+    private function cleanHtml($html)
+    {
+        if (empty($html)) return $html;
+        // Strip background-color and color styles from all tags
+        $html = preg_replace('/style="[^"]*background-color:[^;"]*;?[^"]*"|style="[^"]*color:[^;"]*;?[^"]*"/', '', $html);
+        // Also cleanup empty spans that might be left over if we only had those styles
+        $html = preg_replace('/<span>(.*?)<\/span>/', '$1', $html);
+        return $html;
     }
 
     public function destroy(string $id)

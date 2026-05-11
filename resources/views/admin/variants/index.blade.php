@@ -187,11 +187,35 @@
                             </div>
 
                             {{-- Map Opacity --}}
-                            <div class="mb-3">
-                                <label class="form-label fw-medium">Map Opacity: <span id="opv_e{{ $variant->id }}">{{ $variant->map_opacity ?? 1 }}</span></label>
-                                <input type="range" min="0" max="1" step="0.05" class="form-range"
-                                    value="{{ $variant->map_opacity ?? 1 }}" name="map_opacity"
-                                    oninput="document.getElementById('opv_e{{ $variant->id }}').textContent=parseFloat(this.value).toFixed(2)">
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label fw-medium small">Map Opacity: <span id="opv_e{{ $variant->id }}">{{ $variant->map_opacity ?? 1 }}</span></label>
+                                    <input type="range" min="0" max="1" step="0.05" class="form-range"
+                                        value="{{ $variant->map_opacity ?? 1 }}" name="map_opacity"
+                                        oninput="document.getElementById('opv_e{{ $variant->id }}').textContent=parseFloat(this.value).toFixed(2)">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label fw-medium small">Map Size: <span id="szv_e{{ $variant->id }}">{{ $variant->map_size ?? 100 }}</span>%</label>
+                                    <input type="range" min="10" max="250" step="1" class="form-range"
+                                        value="{{ $variant->map_size ?? 100 }}" name="map_size"
+                                        oninput="document.getElementById('szv_e{{ $variant->id }}').textContent=this.value">
+                                </div>
+                            </div>
+
+                            {{-- Map Position --}}
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label fw-medium small">Map Top: <span id="tpv_e{{ $variant->id }}">{{ $variant->map_top ?? 0 }}</span>%</label>
+                                    <input type="range" min="-100" max="100" step="1" class="form-range"
+                                        value="{{ $variant->map_top ?? 0 }}" name="map_top"
+                                        oninput="document.getElementById('tpv_e{{ $variant->id }}').textContent=this.value">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label fw-medium small">Map Right: <span id="rtv_e{{ $variant->id }}">{{ $variant->map_right ?? 0 }}</span>%</label>
+                                    <input type="range" min="-100" max="100" step="1" class="form-range"
+                                        value="{{ $variant->map_right ?? 0 }}" name="map_right"
+                                        oninput="document.getElementById('rtv_e{{ $variant->id }}').textContent=this.value">
+                                </div>
                             </div>
 
                             {{-- Icon Path --}}
@@ -297,24 +321,46 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Deskripsi</label>
-                                <textarea name="description" class="form-control" rows="3"></textarea>
+                                <div id="desc_add_editor" style="min-height:80px"></div>
+                                <input type="hidden" name="description" id="desc_add_input">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Taste</label>
-                                <textarea name="taste" class="form-control" rows="2"></textarea>
+                                <div id="taste_add_editor" style="min-height:60px"></div>
+                                <input type="hidden" name="taste" id="taste_add_input">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Ingredient</label>
-                                <textarea name="ingredient" class="form-control" rows="2"></textarea>
+                                <div id="ingr_add_editor" style="min-height:60px"></div>
+                                <input type="hidden" name="ingredient" id="ingr_add_input">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Map Image</label>
                                 <input type="file" name="map_image" class="form-control form-control-sm" accept="image/*">
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Map Opacity: <span id="opv_add">1.00</span></label>
-                                <input type="range" min="0" max="1" step="0.05" class="form-range" value="1" name="map_opacity"
-                                    oninput="document.getElementById('opv_add').textContent=parseFloat(this.value).toFixed(2)">
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label small">Map Opacity: <span id="opv_add">1.00</span></label>
+                                    <input type="range" min="0" max="1" step="0.05" class="form-range" value="1" name="map_opacity"
+                                        oninput="document.getElementById('opv_add').textContent=parseFloat(this.value).toFixed(2)">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small">Map Size: <span id="szv_add">100</span>%</label>
+                                    <input type="range" min="10" max="250" step="1" class="form-range" value="100" name="map_size"
+                                        oninput="document.getElementById('szv_add').textContent=this.value">
+                                </div>
+                            </div>
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label small">Map Top: <span id="tpv_add">0</span>%</label>
+                                    <input type="range" min="-100" max="100" step="1" class="form-range" value="0" name="map_top"
+                                        oninput="document.getElementById('tpv_add').textContent=this.value">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small">Map Right: <span id="rtv_add">0</span>%</label>
+                                    <input type="range" min="-100" max="100" step="1" class="form-range" value="0" name="map_right"
+                                        oninput="document.getElementById('rtv_add').textContent=this.value">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Icon</label>
@@ -416,6 +462,50 @@ function selectAsset(path, url) {
 
 // Init Quill editors when modal shown
 document.addEventListener('DOMContentLoaded', function() {
+    // Init Add Modal Editors
+    (function() {
+        const modal = document.getElementById('addModal');
+        let initialized = false;
+        modal.addEventListener('shown.bs.modal', function() {
+            if (initialized) return;
+            initialized = true;
+            const fields = [
+                { editorId: 'desc_add_editor', inputId: 'desc_add_input' },
+                { editorId: 'taste_add_editor', inputId: 'taste_add_input' },
+                { editorId: 'ingr_add_editor', inputId: 'ingr_add_input' },
+            ];
+            fields.forEach(f => {
+                const q = new Quill('#' + f.editorId, { 
+                    theme: 'snow', 
+                    modules: { 
+                        toolbar: [['bold','italic','underline'],['bullet','list'],['clean']],
+                        clipboard: {
+                            matchers: [
+                                [Node.ELEMENT_NODE, function(node, delta) {
+                                    delta.forEach(op => {
+                                        if (op.attributes) {
+                                            delete op.attributes.background;
+                                            delete op.attributes.color;
+                                        }
+                                    });
+                                    return delta;
+                                }]
+                            ]
+                        }
+                    } 
+                });
+                const inp = document.getElementById(f.inputId);
+                q.on('text-change', () => inp.value = q.root.innerHTML);
+            });
+            modal.querySelector('form').addEventListener('submit', function() {
+                fields.forEach(f => {
+                    const q = Quill.find(document.getElementById(f.editorId));
+                    if (q) document.getElementById(f.inputId).value = q.root.innerHTML;
+                });
+            });
+        });
+    })();
+
     @foreach($variants as $variant)
     (function() {
         const modal = document.getElementById('editModal{{ $variant->id }}');
@@ -429,7 +519,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 { editorId: 'ingr_e{{ $variant->id }}_editor', inputId: 'ingr_e{{ $variant->id }}_input' },
             ];
             fields.forEach(f => {
-                const q = new Quill('#' + f.editorId, { theme: 'snow', modules: { toolbar: [['bold','italic','underline'],['bullet','list'],['clean']] } });
+                const q = new Quill('#' + f.editorId, { 
+                    theme: 'snow', 
+                    modules: { 
+                        toolbar: [['bold','italic','underline'],['bullet','list'],['clean']],
+                        clipboard: {
+                            matchers: [
+                                [Node.ELEMENT_NODE, function(node, delta) {
+                                    delta.forEach(op => {
+                                        if (op.attributes) {
+                                            delete op.attributes.background;
+                                            delete op.attributes.color;
+                                        }
+                                    });
+                                    return delta;
+                                }]
+                            ]
+                        }
+                    } 
+                });
                 const inp = document.getElementById(f.inputId);
                 q.on('text-change', () => inp.value = q.root.innerHTML);
                 // Set initial value

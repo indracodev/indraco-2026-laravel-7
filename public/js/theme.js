@@ -15,16 +15,23 @@ document.addEventListener('DOMContentLoaded', function () {
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
    }
 
+   // Read theme forced by server (e.g. brand pages set data-bs-theme="dark" on <html>)
+   // We read it BEFORE any JS modifies the attribute.
+   const pageForcedTheme = html.getAttribute('data-bs-theme') || null;
+
    function getTheme() {
-      return localStorage.getItem('theme') || detectThemeOnce();
+      // User's explicit saved preference always wins
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved;
+      // Server-forced page theme (e.g. dark brand page) takes priority over OS default
+      if (pageForcedTheme) return pageForcedTheme;
+      // Fallback: OS preference
+      return detectThemeOnce();
    }
 
    function setTheme(theme, save = false) {
-      if (html.getAttribute('data-bs-theme') === theme && !save) return; // avoid redundant writes
-      
       html.setAttribute('data-bs-theme', theme);
       if (save) localStorage.setItem('theme', theme);
-      
       updateThemeImages(theme);
       syncInvertedCarousels(theme);
    }
@@ -34,27 +41,21 @@ document.addEventListener('DOMContentLoaded', function () {
    ========================== */
    function syncInvertedCarousels(theme) {
       if (!carouselInverts.length) return;
-      
       const inverted = theme === 'dark' ? 'light' : 'dark';
       carouselInverts.forEach(el => {
-         // avoid reflow if already set
          if (el.getAttribute('data-bs-theme') !== inverted) {
              el.setAttribute('data-bs-theme', inverted);
          }
       });
    }
 
-
    /* =========================
       IMAGE SWITCHER
    ========================== */
-
    function updateThemeImages(theme) {
       if (!themeImages.length) return;
-      
       themeImages.forEach(img => {
          const src = img.dataset[theme];
-         // Only assign if it actually changes to avoid layout recalculation
          if (src && img.getAttribute('src') !== src) {
             img.setAttribute('src', src);
          }
@@ -62,23 +63,23 @@ document.addEventListener('DOMContentLoaded', function () {
    }
 
    /* =========================
-      INIT
+      INIT — always run image swap on load
    ========================== */
-
-   setTheme(getTheme());
+   const resolvedTheme = getTheme();
+   // Always update images even if data-bs-theme already matches (server-rendered pages)
+   html.setAttribute('data-bs-theme', resolvedTheme);
+   updateThemeImages(resolvedTheme);
+   syncInvertedCarousels(resolvedTheme);
 
    /* =========================
       TOGGLE HANDLERS (MULTI)
    ========================== */
-
    if (toggles.length) {
       toggles.forEach(toggle => {
          toggle.addEventListener('click', function (e) {
             e.preventDefault();
-            setTheme(
-               html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark',
-               true
-            );
+            const newTheme = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme, true);
          });
       });
    }
