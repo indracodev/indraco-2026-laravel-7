@@ -16,7 +16,7 @@ class SeoController extends Controller
     /**
      * Field SEO yang tersedia untuk setiap halaman.
      */
-    protected array $fields = [
+    protected $fields = [
         'title'          => 'Meta Title',
         'description'    => 'Meta Description',
         'keywords'       => 'Meta Keywords',
@@ -110,7 +110,7 @@ class SeoController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $page)
+    public function update(Request $request, $page)
     {
         $validated = $request->validate([
             'title'          => 'nullable|string|max:255',
@@ -124,13 +124,16 @@ class SeoController extends Controller
 
         // Determine prefix from the $page key
         $prefix = 'page';
-        if (str_starts_with($page, 'product_')) $prefix = 'product';
-        elseif (str_starts_with($page, 'news_')) $prefix = 'news';
+          if (strpos($page, 'product_') === 0) {
+            $prefix = 'product';
+        } elseif (strpos($page, 'news_') === 0) {
+            $prefix = 'news';
+        }           
 
         foreach ($this->fields as $fieldKey => $fieldLabel) {
             $key = "seo_{$prefix}_{$page}_{$fieldKey}";
             Setting::updateOrCreate(
-                ['setting_key' => $key],
+                ['setting_key' => $key],    
                 ['setting_value' => $validated[$fieldKey] ?? '']
             );
         }
