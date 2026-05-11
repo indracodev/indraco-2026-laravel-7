@@ -64,6 +64,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class)->except(['create', 'edit', 'show']);
         Route::patch('products/{product}/toggle-status', [\App\Http\Controllers\Admin\ProductController::class, 'toggleStatus'])->name('admin.products.toggle-status');
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['create', 'edit', 'show']);
+        Route::patch('collections/{collection}/toggle-status', [\App\Http\Controllers\Admin\CollectionController::class, 'toggleStatus'])->name('admin.collections.toggle-status');
         Route::resource('collections', \App\Http\Controllers\Admin\CollectionController::class)->except(['create', 'edit', 'show']);
         Route::resource('news', \App\Http\Controllers\Admin\NewsController::class)->except(['create', 'edit', 'show']);
         Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class)->except(['create', 'edit', 'show']);

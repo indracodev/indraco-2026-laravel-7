@@ -26,6 +26,7 @@ class TypeController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:100',
+            'collection_id' => 'required|exists:master_collection,id',
         ]);
         $data['slug'] = Str::slug($data['name']);
         
@@ -38,6 +39,7 @@ class TypeController extends Controller
         $type = Type::findOrFail($id);
         $data = $request->validate([
             'name' => 'required|string|max:100',
+            'collection_id' => 'required|exists:master_collection,id',
         ]);
         
         $data['slug'] = Str::slug($data['name']);

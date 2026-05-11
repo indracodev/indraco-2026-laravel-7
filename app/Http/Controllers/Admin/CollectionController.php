@@ -10,7 +10,7 @@ class CollectionController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $collections = \App\Models\Collection::with('brand')
+        $collections = \App\Models\Collection::with(['brand', 'types.variants'])
             ->when($search, function($query) use ($search) {
                 $query->where('collection_name', 'like', "%{$search}%");
             })->latest()->get();
@@ -51,5 +51,12 @@ class CollectionController extends Controller
         $collection = \App\Models\Collection::findOrFail($id);
         $collection->delete();
         return redirect()->back()->with('success', 'Koleksi berhasil dihapus.');
+    }
+    public function toggleStatus(string $id)
+    {
+        $collection = \App\Models\Collection::findOrFail($id);
+        $collection->status = $collection->status === 'active' ? 'inactive' : 'active';
+        $collection->save();
+        return redirect()->back()->with('success', 'Status koleksi berhasil diubah menjadi ' . $collection->status . '.');
     }
 }

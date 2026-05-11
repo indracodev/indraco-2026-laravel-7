@@ -224,7 +224,7 @@
         </div>
         <div class="card-footer bg-white py-3">
             <div class="d-flex justify-content-center">
-                {{ $files->links('pagination::bootstrap-5') }}
+                {{ $files->links() }}
             </div>
         </div>
     </div>

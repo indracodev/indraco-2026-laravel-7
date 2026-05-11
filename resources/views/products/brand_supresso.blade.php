@@ -37,6 +37,15 @@
     .card-img img { transition: transform 0.5s ease; }
     .card:hover .card-img img { transform: scale(1.1); }
 
+    /* Strip inline styles injected by Quill rich-text editor */
+    .product-description, .product-description *,
+    .product-taste, .product-taste *,
+    .product-ingredient, .product-ingredient *,
+    .lead, .lead * {
+        background-color: transparent !important;
+        color: inherit !important;
+    }
+
     .product-acidity, .product-viscosity {
         font-size: 0.875rem;
         line-height: 1.2;
@@ -93,7 +102,7 @@ if (!function_exists('renderRatingStars')) {
     {{-- Brand logo & description --}}
     <div class="text-center container mb-5" style="max-width: 860px;">
         <img src="{{ asset($brand->logo_path) }}" alt="Logo {{ $brand->name }}" loading="lazy" class="img-fluid mb-3" style="max-width: 9rem;">
-        <p class="lead">{{ $brand->desc }}</p>
+        <p class="lead">{!! $brand->desc !!}</p>
     </div>
 
     {{-- Collection tabs --}}
@@ -158,16 +167,19 @@ if (!function_exists('renderRatingStars')) {
                                     @if(!empty($v->map_image))
                                     <img src="{{ asset($v->map_image) }}"
                                          alt=""
-                                         class="map-img w-100 h-auto position-lg-absolute top-0 end-0"
-                                         style="opacity: {{ $v->map_opacity ?? 0.70 }};">
+                                         class="map-img h-auto position-lg-absolute"
+                                         style="opacity: {{ $v->map_opacity ?? 0.70 }}; 
+                                                width: {{ $v->map_size ?? 100 }}%; 
+                                                top: {{ $v->map_top ?? 0 }}%; 
+                                                right: {{ $v->map_right ?? 0 }}%;">
                                     @endif
                                 </div>
                                 {{-- Title, description, taste --}}
                                 <div class="col col-12 col-lg-5 z-2">
                                     <h3 class="product-title display-5 fw-bold text-capitalize">{{ $v->name }}</h3>
-                                    <p class="product-description">{!! nl2br(e($v->desc)) !!}</p>
+                                    <p class="product-description">{!! $v->desc !!}</p>
                                     @if(!empty($v->taste_translated))
-                                    <p class="product-taste text-uppercase fw-bold">{{ $v->taste_translated }}</p>
+                                    <p class="product-taste text-uppercase fw-bold">{!! $v->taste_translated !!}</p>
                                     @endif
                                 </div>
                                 {{-- Acidity / Body rating (hidden for Kraton) --}}
@@ -180,7 +192,7 @@ if (!function_exists('renderRatingStars')) {
                                     <p class="product-process text-capitalize small opacity-75">{{ $v->roast_translated }}</p>
                                     @endif
                                     @if(!empty($v->ingredient_translated))
-                                    <p class="product-ingredient text-capitalize small opacity-75">{{ $v->ingredient_translated }}</p>
+                                    <p class="product-ingredient text-capitalize small opacity-75">{!! $v->ingredient_translated !!}</p>
                                     @endif
                                 </div>
                             </div>
