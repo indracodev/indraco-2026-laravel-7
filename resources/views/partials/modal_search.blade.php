@@ -37,8 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fungsi untuk mempercantik URL (slugify)
     function slugify(text) {
         return text.toString().toLowerCase()
+            .normalize('NFD')               // Pisahkan karakter aksen (misal: é -> e + ´)
+            .replace(/[\u0300-\u036f]/g, '') // Hapus karakter aksen
             .replace(/\s+/g, '-')           // Ganti spasi dengan -
-            .replace(/[^\w\-]+/g, '')       // Hapus karakter non-word
+            .replace(/[^\w\-]+/g, '')       // Hapus karakter non-word (kecuali -)
             .replace(/\-\-+/g, '-')         // Ganti multi - dengan satu -
             .replace(/^-+/, '')             // Hapus - di awal
             .replace(/-+$/, '');            // Hapus - di akhir

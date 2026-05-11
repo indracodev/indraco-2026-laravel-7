@@ -12,7 +12,7 @@ class ProductController extends Controller
         $search = $request->input('search');
         $products = \App\Models\Product::with('brand', 'category')
             ->when($search, function($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
+                $query->where('nama_produk', 'like', "%{$search}%")
                       ->orWhere('sku', 'like', "%{$search}%");
             })->latest()->get();
             
@@ -25,9 +25,9 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:150',
-            'brand_id' => 'nullable|exists:brands,id',
-            'category_id' => 'nullable|exists:categories,id',
-            'regular_price' => 'nullable|numeric',
+            'brand_id' => 'nullable|exists:master_merek,id',
+            'category_id' => 'nullable|exists:master_kategori,id',
+            'harga_reguler' => 'nullable|numeric',
             'status' => 'required|in:active,inactive,draft',
         ]);
         $data['slug'] = \Illuminate\Support\Str::slug($data['name']) . '-' . time();
@@ -41,14 +41,23 @@ class ProductController extends Controller
         $product = \App\Models\Product::findOrFail($id);
         $data = $request->validate([
             'name' => 'required|string|max:150',
-            'brand_id' => 'nullable|exists:brands,id',
-            'category_id' => 'nullable|exists:categories,id',
-            'regular_price' => 'nullable|numeric',
+            'brand_id' => 'nullable|exists:master_merek,id',
+            'category_id' => 'nullable|exists:master_kategori,id',
+            'harga_reguler' => 'nullable|numeric',
             'status' => 'required|in:active,inactive,draft',
         ]);
         
         $product->update($data);
         return redirect()->back()->with('success', 'Produk berhasil diperbarui.');
+    }
+
+    public function toggleStatus(string $id)
+    {
+        $product = \App\Models\Product::findOrFail($id);
+        $product->status = $product->status === 'active' ? 'inactive' : 'active';
+        $product->save();
+        
+        return redirect()->back()->with('success', 'Status produk berhasil diubah menjadi ' . $product->status . '.');
     }
 
     public function destroy(string $id)

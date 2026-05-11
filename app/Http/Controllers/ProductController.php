@@ -46,6 +46,7 @@ class ProductController extends Controller
                 ->where('status', 'active')
                 ->where('is_deleted', 0)
                 ->get();
+                dd($products);
             return view('products.brand_standard', [
                 'brand'        => $brand,
                 'products'     => $products,
@@ -122,14 +123,21 @@ class ProductController extends Controller
     {
         // Ubah tanda hubung kembali menjadi spasi untuk pencarian database
         $searchQuery = str_replace('-', ' ', $query);
+        $words = explode(' ', $searchQuery);
 
         $products = Product::where('status', 'active')
             ->where('is_deleted', 0)
-            ->where(function($q) use ($searchQuery) {
-                $q->where('nama_produk', 'LIKE', "%{$searchQuery}%")
-                  ->orWhere('sku', 'LIKE', "%{$searchQuery}%")
-                  ->orWhere('tipe_packing', 'LIKE', "%{$searchQuery}%")
-                  ->orWhere('inner_kemasan', 'LIKE', "%{$searchQuery}%");
+            ->where(function($q) use ($words, $searchQuery) {
+                // Semua kata harus ada di nama_produk (AND)
+                $q->where(function($sub) use ($words) {
+                    foreach ($words as $word) {
+                        $sub->where('nama_produk', 'LIKE', "%{$word}%");
+                    }
+                })
+                // ATAU cocok dengan field lain secara keseluruhan
+                ->orWhere('sku', 'LIKE', "%{$searchQuery}%")
+                ->orWhere('tipe_packing', 'LIKE', "%{$searchQuery}%")
+                ->orWhere('inner_kemasan', 'LIKE', "%{$searchQuery}%");
             })
             ->get();
 
@@ -139,14 +147,21 @@ class ProductController extends Controller
     public function suggestions(Request $request)
     {
         $query = $request->get('q');
+        $words = explode(' ', $query);
         
         $products = Product::where('status', 'active')
             ->where('is_deleted', 0)
-            ->where(function($q) use ($query) {
-                $q->where('nama_produk', 'LIKE', "%{$query}%")
-                  ->orWhere('sku', 'LIKE', "%{$query}%")
-                  ->orWhere('tipe_packing', 'LIKE', "%{$query}%")
-                  ->orWhere('inner_kemasan', 'LIKE', "%{$query}%");
+            ->where(function($q) use ($words, $query) {
+                // Semua kata harus ada di nama_produk (AND)
+                $q->where(function($sub) use ($words) {
+                    foreach ($words as $word) {
+                        $sub->where('nama_produk', 'LIKE', "%{$word}%");
+                    }
+                })
+                // ATAU cocok dengan field lain secara keseluruhan
+                ->orWhere('sku', 'LIKE', "%{$query}%")
+                ->orWhere('tipe_packing', 'LIKE', "%{$query}%")
+                ->orWhere('inner_kemasan', 'LIKE', "%{$query}%");
             })
             ->limit(10)
             ->get(['id', 'nama_produk', 'slug', 'sku', 'gambar_utama']);

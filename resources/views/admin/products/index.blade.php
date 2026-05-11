@@ -45,11 +45,18 @@
                         <td>{{ $product->category->name ?? '-' }}</td>
                         <td>Rp {{ number_format($product->regular_price, 0, ',', '.') }}</td>
                         <td>
-                            <span class="badge {{ $product->status == 'active' ? 'bg-success' : ($product->status == 'draft' ? 'bg-warning' : 'bg-secondary') }}">
-                                {{ ucfirst($product->status) }}
-                            </span>
+                            <form action="{{ url('admin/products/'.$product->id.'/toggle-status') }}" method="POST" class="m-0 p-0" style="display:inline-block;">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="border-0 bg-transparent p-0" title="Klik untuk mengubah status">
+                                    <span class="badge {{ $product->status == 'active' ? 'bg-success' : ($product->status == 'draft' ? 'bg-warning' : 'bg-secondary') }}">
+                                        {{ ucfirst($product->status) }}
+                                    </span>
+                                </button>
+                            </form>
                         </td>
                         <td class="text-end pe-4">
+                            <button type="button" class="btn btn-sm btn-outline-info me-1" data-bs-toggle="modal" data-bs-target="#previewModal{{ $product->id }}">Preview</button>
                             <button type="button" class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#editModal{{ $product->id }}">Edit</button>
                             <form action="{{ url('admin/products/'.$product->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
                                 @csrf
@@ -58,62 +65,6 @@
                             </form>
                         </td>
                     </tr>
-
-                    <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal{{ $product->id }}" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <form action="{{ url('admin/products/'.$product->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Edit Produk</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-start">
-                                        <div class="mb-3">
-                                            <label class="form-label">Nama Produk</label>
-                                            <input type="text" name="name" class="form-control" value="{{ $product->name }}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Merek</label>
-                                            <select name="brand_id" class="form-select">
-                                                <option value="">-- Pilih Merek --</option>
-                                                @foreach($brands as $brand)
-                                                    <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Kategori</label>
-                                            <select name="category_id" class="form-select">
-                                                <option value="">-- Pilih Kategori --</option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Harga Regular</label>
-                                            <input type="number" name="regular_price" class="form-control" value="{{ $product->regular_price }}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Status</label>
-                                            <select name="status" class="form-select" required>
-                                                <option value="active" {{ $product->status == 'active' ? 'selected' : '' }}>Active</option>
-                                                <option value="draft" {{ $product->status == 'draft' ? 'selected' : '' }}>Draft</option>
-                                                <option value="inactive" {{ $product->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                     @empty
                     <tr>
                         <td colspan="6" class="text-center py-4 text-muted">Belum ada data produk.</td>
@@ -160,7 +111,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Harga Regular</label>
-                        <input type="number" name="regular_price" class="form-control" value="0">
+                        <input type="number" name="harga_reguler" class="form-control" value="0">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Status</label>
@@ -179,4 +130,127 @@
         </form>
     </div>
 </div>
+
+@foreach($products as $product)
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal{{ $product->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detail Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-start">
+                <div class="text-center mb-4">
+                    @php
+                        $img_path = !empty($product->gambar_utama) ? $product->gambar_utama : 'images/no-image.png';
+                    @endphp
+                    <img src="{{ asset($img_path) }}" alt="{{ $product->name }}" class="img-fluid rounded shadow-sm" style="max-height: 250px; object-fit: contain;">
+                </div>
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                        <tr>
+                            <th width="35%">Nama Produk</th>
+                            <td>: {{ $product->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>SKU</th>
+                            <td>: {{ $product->sku ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Merek</th>
+                            <td>: {{ $product->brand->name ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kategori</th>
+                            <td>: {{ $product->category->name ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tipe Packing</th>
+                            <td>: {{ $product->tipe_packing ?? '-' }} {{ !empty($product->inner_kemasan) ? '('.$product->inner_kemasan.')' : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Harga Regular</th>
+                            <td>: Rp {{ number_format($product->harga_reguler ?? 0, 0, ',', '.') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>: 
+                                <span class="badge {{ $product->status == 'active' ? 'bg-success' : ($product->status == 'draft' ? 'bg-warning' : 'bg-secondary') }}">
+                                    {{ ucfirst($product->status) }}
+                                </span>
+                            </td>
+                        </tr>
+                        @if(!empty($product->link_web))
+                        <tr>
+                            <th>Link Web</th>
+                            <td>: <a href="{{ $product->link_web }}" target="_blank" class="text-break">{{ $product->link_web }}</a></td>
+                        </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal{{ $product->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ url('admin/products/'.$product->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Produk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Produk</label>
+                        <input type="text" name="name" class="form-control" value="{{ $product->name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Merek</label>
+                        <select name="brand_id" class="form-select">
+                            <option value="">-- Pilih Merek --</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kategori</label>
+                        <select name="category_id" class="form-select">
+                            <option value="">-- Pilih Kategori --</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Harga Regular</label>
+                        <input type="number" name="harga_reguler" class="form-control" value="{{ $product->harga_reguler }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-select" required>
+                            <option value="active" {{ $product->status == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="draft" {{ $product->status == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="inactive" {{ $product->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@endforeach
 @endsection
