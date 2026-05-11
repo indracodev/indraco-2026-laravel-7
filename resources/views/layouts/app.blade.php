@@ -8,18 +8,78 @@ data-bs-theme="@yield('html_theme')"
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @php
+        // ── Per-page SEO resolution ──────────────────────────────────────────
+        $routePageMap = [
+            'home'          => 'home',
+            'about'         => 'about',
+            'products'      => 'products',
+            'products.show' => 'products',
+            'news'          => 'news',
+            'news.show'     => 'news',
+            'businesses'    => 'businesses',
+            'stores'        => 'stores',
+            'career'        => 'career',
+            'contact'       => 'contact',
+            'equipment'     => 'equipment',
+            'foodservice'   => 'foodservice',
+            'download'      => 'download',
+            'privacy'       => 'privacy',
+            'terms'         => 'terms',
+        ];
+        $currentRoute = \Illuminate\Support\Facades\Route::currentRouteName();
+        $currentPage  = $routePageMap[$currentRoute] ?? null;
+
+        // Determine SEO Prefix and Key
+        // Priority: Dynamic Object (Product/News) -> Static Page -> Global Default
+        $seoPrefix = 'page';
+        $seoKey    = $currentPage;
+
+        if ($currentRoute === 'products.show' && isset($brand)) {
+            $seoPrefix = 'product'; // In this project brands are often treated as product listings
+            $seoKey    = "product_{$brand->id}";
+        } elseif ($currentRoute === 'news.show' && isset($news)) {
+            $seoPrefix = 'news';
+            $seoKey    = "news_{$news->id}";
+        }
+
+        $pageSeoTitle     = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_title"]       ?? null) : null;
+        $pageSeoDesc      = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_description"]  ?? null) : null;
+        $pageSeoKeywords  = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_keywords"]     ?? null) : null;
+        $pageSeoOgTitle   = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_og_title"]     ?? null) : null;
+        $pageSeoOgDesc    = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_og_description"] ?? null) : null;
+        $pageSeoOgImage   = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_og_image"]     ?? null) : null;
+        $pageSeoCanonical = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_canonical"]    ?? null) : null;
+
+        // Fallback chain: specific → global setting → hardcoded default
+        $defaultTitle    = $pageSeoTitle   ?? $settings['seo_title']       ?? 'Perusahaan FMCG Terkemuka di Indonesia Sejak 1971 – INDRACO';
+        $defaultDesc     = $pageSeoDesc    ?? $settings['seo_description'] ?? 'INDRACO adalah perusahaan FMCG terkemuka di Indonesia sejak 1971, menghadirkan berbagai produk berkualitas.';
+        $defaultKeywords = $pageSeoKeywords ?? $settings['seo_keywords']   ?? 'indraco, fmcg indonesia, kopi indonesia';
+        $defaultOgTitle  = $pageSeoOgTitle ?? $pageSeoTitle ?? $settings['seo_title'] ?? 'INDRACO – Indonesia Leading FMCG Company Since 1971';
+        $defaultOgDesc   = $pageSeoOgDesc  ?? $pageSeoDesc  ?? $settings['seo_description'] ?? 'Perusahaan kopi dan produk konsumen Indonesia sejak 1971.';
+        $defaultOgImage  = $pageSeoOgImage ? (str_starts_with($pageSeoOgImage, 'http') ? $pageSeoOgImage : asset($pageSeoOgImage)) : asset($settings['seo_og_image'] ?? 'images/og-image.jpg');
+    @endphp
+
     {{-- SEO Settings --}}
-    <meta name="description" content="@yield('meta_description', $settings['seo_description'] ?? 'INDRACO adalah perusahaan FMCG terkemuka di Indonesia sejak 1971, menghadirkan berbagai produk berkualitas seperti kopi, teh, jahe, dan cokelat.')">
-    <meta name="keywords" content="@yield('meta_keywords', $settings['seo_keywords'] ?? 'indraco, fmcg indonesia, kopi indonesia')">
+    <meta name="description" content="@yield('meta_description', $defaultDesc)">
+    <meta name="keywords" content="@yield('meta_keywords', $defaultKeywords)">
     @if (!empty($settings['google_site_verification']))
         <meta name="google-site-verification" content="{{ $settings['google_site_verification'] }}" />
     @endif
 
     {{-- Open Graph --}}
-    <meta property="og:title" content="@yield('og_title', $settings['seo_title'] ?? 'INDRACO – Indonesia Leading FMCG Company Since 1971')">
-    <meta property="og:description" content="@yield('og_description', $settings['seo_description'] ?? 'Perusahaan kopi dan produk konsumen Indonesia sejak 1971.')">
-    <meta property="og:image" content="@yield('og_image', asset($settings['seo_og_image'] ?? 'images/og-image.jpg'))">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('og_title', $defaultOgTitle)">
+    <meta property="og:description" content="@yield('og_description', $defaultOgDesc)">
+    <meta property="og:image" content="@yield('og_image', $defaultOgImage)">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="@yield('og_url', url()->current())">
+
+    {{-- Canonical URL --}}
+    @if($pageSeoCanonical || !\Illuminate\Support\Str::contains($currentRoute ?? '', '.show'))
+    <link rel="canonical" href="@yield('canonical', $pageSeoCanonical ?? url()->current())">
+    @else
+    @hasSection('canonical')<link rel="canonical" href="@yield('canonical')">@endif
+    @endif
 
     {{-- Google Analytics --}}
     @if (!empty($settings['google_analytics_id']))
@@ -69,7 +129,7 @@ data-bs-theme="@yield('html_theme')"
 
     @yield('styles')
 
-    <title>@yield('title', $settings['seo_title'] ?? 'Perusahaan FMCG Terkemuka di Indonesia Sejak 1971 – INDRACO')</title>
+    <title>@yield('title', $defaultTitle)</title>
 </head>
 
 <body>
