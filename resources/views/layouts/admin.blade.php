@@ -51,7 +51,9 @@
                             @php
                                 $isActive = false;
                                 foreach($menu->children_list as $child) {
-                                    if($child->url && request()->is(trim($child->url, '/').'*')) {
+                                    $childPath = trim($child->url ?? '', '/');
+                                    $childSegments = $childPath ? count(explode('/', $childPath)) : 0;
+                                    if($child->url && (request()->is($childPath) || ($childSegments > 1 && request()->is($childPath.'/*')))) {
                                         $isActive = true;
                                         break;
                                     }
@@ -69,7 +71,8 @@
                                     <ul class="nav flex-column ms-3">
                                         @foreach($menu->children_list as $child)
                                             <li class="nav-item">
-                                                <a class="nav-link rounded px-3 py-2 mb-2 {{ request()->is(trim($child->url, '/').'*') ? 'active' : '' }}" href="{{ url($child->url ?? '#') }}">
+                                                @php $childPath2 = trim($child->url ?? '', '/'); $childSegs2 = $childPath2 ? count(explode('/', $childPath2)) : 0; @endphp
+                                                <a class="nav-link rounded px-3 py-2 mb-2 {{ (request()->is($childPath2) || ($childSegs2 > 1 && request()->is($childPath2.'/*'))) ? 'active' : '' }}" href="{{ url($child->url ?? '#') }}">
                                                     @if($child->icon) <i class="{{ $child->icon }} me-2"></i> @endif
                                                     {{ $child->title }}
                                                 </a>
@@ -86,7 +89,9 @@
                             @php
                                 $isActive = false;
                                 foreach($menu->children_list as $child) {
-                                    if($child->url && request()->is(trim($child->url, '/').'*')) {
+                                    $childPath = trim($child->url ?? '', '/');
+                                    $childSegments = $childPath ? count(explode('/', $childPath)) : 0;
+                                    if($child->url && (request()->is($childPath) || ($childSegments > 1 && request()->is($childPath.'/*')))) {
                                         $isActive = true;
                                         break;
                                     }
@@ -104,7 +109,8 @@
                                     <ul class="nav flex-column ms-3">
                                         @foreach($menu->children_list as $child)
                                             <li class="nav-item">
-                                                <a class="nav-link rounded px-3 py-2 mb-2 {{ request()->is(trim($child->url, '/').'*') ? 'active' : '' }}" href="{{ url($child->url ?? '#') }}">
+                                                @php $childPath3 = trim($child->url ?? '', '/'); $childSegs3 = $childPath3 ? count(explode('/', $childPath3)) : 0; @endphp
+                                                <a class="nav-link rounded px-3 py-2 mb-2 {{ (request()->is($childPath3) || ($childSegs3 > 1 && request()->is($childPath3.'/*'))) ? 'active' : '' }}" href="{{ url($child->url ?? '#') }}">
                                                     @if($child->icon) <i class="{{ $child->icon }} me-2"></i> @endif
                                                     {{ $child->title }}
                                                 </a>
@@ -114,8 +120,13 @@
                                 </div>
                             </li>
                         @else
+                            @php
+                                $menuPath = trim($menu->url ?? '', '/');
+                                $menuSegments = $menuPath ? count(explode('/', $menuPath)) : 0;
+                                $menuActive = $menu->url && $menu->url != '/' && (request()->is($menuPath) || ($menuSegments > 1 && request()->is($menuPath.'/*')));
+                            @endphp
                             <li class="nav-item">
-                                <a class="nav-link rounded px-3 py-2 mb-2 {{ request()->is(trim($menu->url, '/').'*') && $menu->url != '/' ? 'active' : '' }}" href="{{ url($menu->url ?? '#') }}" {!! $menu->url == '/' ? 'target="_blank"' : '' !!}>
+                                <a class="nav-link rounded px-3 py-2 mb-2 {{ $menuActive ? 'active' : '' }}" href="{{ url($menu->url ?? '#') }}" {!! $menu->url == '/' ? 'target="_blank"' : '' !!}>
                                     @if($menu->icon) <i class="{{ $menu->icon }} me-2"></i> @endif
                                     {{ $menu->title }}
                                 </a>
