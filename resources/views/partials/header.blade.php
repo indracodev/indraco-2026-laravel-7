@@ -87,8 +87,13 @@
                                 <div class="d-flex column-gap-4 w-100">
                                     <div class="nav flex-column nav-pills" role="tablist">
                                         @foreach($main_categories as $index => $cat)
-                                            @php $lk = $labelKeyMap[$cat->slug] ?? ('nav_' . str_replace('-','_',$cat->slug)); @endphp
-                                            <button type="button" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover {{ $index === 0 ? 'active' : '' }}" id="tab-link-{{ $cat->slug }}" data-bs-toggle="pill" data-bs-target="#tab-pane-{{ $cat->slug }}" role="tab" aria-selected="{{ $index === 0 ? 'true' : 'false' }}" data-i18n="{{ $lk }}">{{ __($lk) }}</button>
+                                            @php 
+                                                $lk = $labelKeyMap[$cat->slug] ?? ('nav_' . str_replace('-','_',$cat->slug)); 
+                                                $targetUrl = '';
+                                                if ($cat->slug === 'food-service') $targetUrl = route('foodservice');
+                                                elseif ($cat->slug === 'mesin-peralatan-khusus') $targetUrl = route('equipment');
+                                            @endphp
+                                            <button type="button" class="nav-link text-reset text-start px-0 bg-transparent rounded-0 opacity-75-hover {{ $index === 0 ? 'active' : '' }}" id="tab-link-{{ $cat->slug }}" data-bs-toggle="pill" data-bs-target="#tab-pane-{{ $cat->slug }}" role="tab" aria-selected="{{ $index === 0 ? 'true' : 'false' }}" data-i18n="{{ $lk }}" {!! $targetUrl ? 'data-target-url="'.$targetUrl.'"' : '' !!}>{{ __($lk) }}</button>
                                         @endforeach
                                     </div>
                                     <div class="vr"></div>
