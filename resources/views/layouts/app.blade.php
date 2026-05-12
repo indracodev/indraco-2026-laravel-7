@@ -38,9 +38,9 @@ data-bs-theme="@yield('html_theme')"
         if ($currentRoute === 'products.show' && isset($brand)) {
             $seoPrefix = 'product'; // In this project brands are often treated as product listings
             $seoKey    = "product_{$brand->id}";
-        } elseif ($currentRoute === 'news.show' && isset($news)) {
+        } elseif ($currentRoute === 'news.show' && isset($item)) {
             $seoPrefix = 'news';
-            $seoKey    = "news_{$news->id}";
+            $seoKey    = "news_{$item->id}";
         }
 
         $pageSeoTitle     = $seoKey ? ($settings["seo_{$seoPrefix}_{$seoKey}_title"]       ?? null) : null;
