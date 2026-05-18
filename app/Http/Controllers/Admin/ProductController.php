@@ -45,8 +45,22 @@ class ProductController extends Controller
             'category_id' => 'nullable|exists:master_kategori,id',
             'harga_reguler' => 'nullable|numeric',
             'status' => 'required|in:active,inactive,draft',
+            'gambar_utama' => 'nullable|string',
+            'gambar_utama_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
         
+        if ($request->hasFile('gambar_utama_file')) {
+            $image = $request->file('gambar_utama_file');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/uploads'), $imageName);
+            $data['gambar_utama'] = 'images/uploads/' . $imageName;
+
+            // Delete old image if exists
+            if (!empty($product->gambar_utama) && file_exists(public_path($product->gambar_utama))) {
+                @unlink(public_path($product->gambar_utama));
+            }
+        }
+
         $product->update($data);
         return redirect()->back()->with('success', 'Produk berhasil diperbarui.');
     }

@@ -11,6 +11,7 @@ class AssetController extends Controller
     public function index(Request $request)
     {
         $path = $request->get('path', 'images');
+        $search = $request->get('search');
         $fullPath = public_path($path);
         
         if (!File::exists($fullPath)) {
@@ -23,15 +24,21 @@ class AssetController extends Controller
 
         $items = File::directories($fullPath);
         foreach ($items as $item) {
+            $name = basename($item);
+            if ($search && stripos($name, $search) === false) continue;
+            
             $directories[] = [
-                'name' => basename($item),
+                'name' => $name,
                 'path' => $path . '/' . basename($item),
             ];
         }
 
         $items = File::files($fullPath);
         foreach ($items as $item) {
-            $filePath = $path . '/' . $item->getFilename();
+            $filename = $item->getFilename();
+            if ($search && stripos($filename, $search) === false) continue;
+
+            $filePath = $path . '/' . $filename;
             $fullFilePath = public_path($filePath);
             $dimensions = null;
             $isImage = in_array(strtolower($item->getExtension()), ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']);
@@ -44,7 +51,7 @@ class AssetController extends Controller
             }
 
             $files[] = [
-                'name' => $item->getFilename(),
+                'name' => $filename,
                 'path' => $filePath,
                 'url' => asset($filePath),
                 'size' => number_format($item->getSize() / 1024, 2) . ' KB',
@@ -76,12 +83,16 @@ class AssetController extends Controller
         // Get settings
         $settings = \App\Models\Setting::pluck('setting_value', 'setting_key')->toArray();
 
+        $products = \App\Models\Product::orderBy('nama_produk')->get();
+
         return view('admin.assets.index', [
             'directories' => $directories,
             'files' => $paginatedFiles,
             'path' => $path,
+            'search' => $search,
             'parentPath' => $parentPath,
-            'settings' => $settings
+            'settings' => $settings,
+            'products' => $products
         ]);
     }
 
@@ -123,5 +134,19 @@ class AssetController extends Controller
         $file->move(public_path($path), $filename);
 
         return redirect()->back()->with('success', 'File berhasil diupload.');
+    }
+
+    public function setProductImage(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required',
+            'path' => 'required|string',
+        ]);
+
+        $product = \App\Models\Product::findOrFail($request->product_id);
+        $product->gambar_utama = $request->path;
+        $product->save();
+
+        return redirect()->back()->with('success', 'Gambar utama produk ' . $product->name . ' berhasil diperbarui.');
     }
 }

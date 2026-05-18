@@ -72,6 +72,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class)->only(['index', 'destroy']);
         Route::get('assets', [\App\Http\Controllers\Admin\AssetController::class, 'index'])->name('admin.assets.index');
         Route::post('assets/upload', [\App\Http\Controllers\Admin\AssetController::class, 'upload'])->name('admin.assets.upload');
+        Route::post('assets/set-product-image', [\App\Http\Controllers\Admin\AssetController::class, 'setProductImage'])->name('admin.assets.set_product_image');
         Route::post('assets/settings', [\App\Http\Controllers\Admin\AssetController::class, 'updateSettings'])->name('admin.assets.settings');
         Route::delete('assets/delete', [\App\Http\Controllers\Admin\AssetController::class, 'destroy'])->name('admin.assets.destroy');
         Route::post('menus/reorder', [\App\Http\Controllers\Admin\AdminMenuController::class, 'reorder'])->name('menus.reorder');

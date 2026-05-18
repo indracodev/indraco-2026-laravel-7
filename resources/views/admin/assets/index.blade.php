@@ -4,6 +4,11 @@
 @section('page_title', 'Manajemen Asset')
 
 @section('content')
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+@endpush
+
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -95,8 +100,13 @@
                 @endforeach
             </ol>
         </nav>
-        <div class="d-flex gap-2 mt-3 mt-md-0">
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">
+        <div class="d-flex flex-column flex-md-row gap-2 mt-3 mt-md-0">
+            <form action="{{ url('admin/assets') }}" method="GET" class="d-flex">
+                <input type="hidden" name="path" value="{{ $path }}">
+                <input type="text" name="search" class="form-control form-control-sm me-2" placeholder="Cari file/folder..." value="{{ $search ?? '' }}">
+                <button type="submit" class="btn btn-sm btn-outline-secondary">Cari</button>
+            </form>
+            <button type="button" class="btn btn-primary btn-sm text-nowrap" data-bs-toggle="modal" data-bs-target="#uploadModal">
                 <i class="bi bi-upload me-1"></i> Upload File
             </button>
         </div>
@@ -195,6 +205,7 @@
                                             </form>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
+                                        <li><button type="button" class="dropdown-item small" onclick="openProductModal('{{ $file['path'] }}', '{{ $file['url'] }}')">Set Sebagai Gambar Produk</button></li>
                                         <li><button type="button" class="dropdown-item small" onclick="copyUrl('{{ $file['url'] }}')">Copy URL</button></li>
                                     </ul>
                                 </div>
@@ -257,14 +268,67 @@
     </div>
 </div>
 
+<!-- Set Product Image Modal -->
+<div class="modal fade" id="setProductImageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('admin.assets.set_product_image') }}" method="POST">
+            @csrf
+            <input type="hidden" name="path" id="productImagePath">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pilih Produk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="text-center mb-3">
+                        <img src="" id="productImagePreview" class="img-thumbnail" style="max-height: 150px; display: none;">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ganti gambar utama untuk produk:</label>
+                        <select name="product_id" id="product_id_select" class="form-select" required>
+                            <option value="">-- Pilih Produk --</option>
+                            @foreach($products as $product)
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+$(document).ready(function() {
+    $('#product_id_select').select2({
+        theme: 'bootstrap-5',
+        dropdownParent: $('#setProductImageModal'),
+        placeholder: '-- Pilih Produk --',
+        width: '100%'
+    });
+});
+
 function copyUrl(url) {
     navigator.clipboard.writeText(url).then(function() {
         alert('URL berhasil disalin ke clipboard!');
     }, function(err) {
         console.error('Gagal menyalin: ', err);
     });
+}
+function openProductModal(path, url) {
+    document.getElementById('productImagePath').value = path;
+    const preview = document.getElementById('productImagePreview');
+    preview.src = url;
+    preview.style.display = 'inline-block';
+    
+    var modal = new bootstrap.Modal(document.getElementById('setProductImageModal'));
+    modal.show();
 }
 </script>
 @endpush
