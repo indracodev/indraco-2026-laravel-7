@@ -58,6 +58,30 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth')->group(function () {
         // Routes accessible by all authenticated admin roles
         Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+        
+        Route::resource('variants', \App\Http\Controllers\Admin\VariantController::class)->except(['create', 'edit', 'show']);
+        Route::resource('types', \App\Http\Controllers\Admin\TypeController::class)->except(['create', 'edit', 'show']);
+        Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['create', 'edit', 'show']);
+        Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class)->except(['create', 'edit', 'show']);
+        Route::patch('products/{product}/toggle-status', [\App\Http\Controllers\Admin\ProductController::class, 'toggleStatus'])->name('admin.products.toggle-status');
+        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['create', 'edit', 'show']);
+        Route::patch('collections/{collection}/toggle-status', [\App\Http\Controllers\Admin\CollectionController::class, 'toggleStatus'])->name('admin.collections.toggle-status');
+        Route::resource('collections', \App\Http\Controllers\Admin\CollectionController::class)->except(['create', 'edit', 'show']);
+        Route::resource('news', \App\Http\Controllers\Admin\NewsController::class)->except(['create', 'edit', 'show']);
+        Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class)->except(['create', 'edit', 'show']);
+        Route::resource('settings', \App\Http\Controllers\Admin\SettingController::class)->except(['create', 'edit', 'show']);
+        Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class)->only(['index', 'destroy']);
+        Route::get('assets', [\App\Http\Controllers\Admin\AssetController::class, 'index'])->name('admin.assets.index');
+        Route::post('assets/upload', [\App\Http\Controllers\Admin\AssetController::class, 'upload'])->name('admin.assets.upload');
+        Route::post('assets/set-product-image', [\App\Http\Controllers\Admin\AssetController::class, 'setProductImage'])->name('admin.assets.set_product_image');
+        Route::post('assets/settings', [\App\Http\Controllers\Admin\AssetController::class, 'updateSettings'])->name('admin.assets.settings');
+        Route::delete('assets/delete', [\App\Http\Controllers\Admin\AssetController::class, 'destroy'])->name('admin.assets.destroy');
+        Route::post('menus/reorder', [\App\Http\Controllers\Admin\AdminMenuController::class, 'reorder'])->name('menus.reorder');
+        Route::resource('menus', \App\Http\Controllers\Admin\AdminMenuController::class)->except(['create', 'edit', 'show']);
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['create', 'edit', 'show']);
+        
+        Route::get('users/impersonate/{id}', [\App\Http\Controllers\Admin\UserController::class, 'impersonate'])->name('admin.users.impersonate');
+        Route::get('users/impersonate-leave', [\App\Http\Controllers\Admin\UserController::class, 'leaveImpersonate'])->name('admin.users.impersonate.leave');
 
         // Routes for marcom: SEO, News & Content, Analytics
         Route::get('seo', [\App\Http\Controllers\Admin\SeoController::class, 'index'])->name('admin.seo.index');

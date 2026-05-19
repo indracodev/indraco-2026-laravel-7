@@ -200,7 +200,7 @@
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal{{ $product->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{ url('admin/products/'.$product->id) }}" method="POST">
+        <form action="{{ url('admin/products/'.$product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="modal-content">
@@ -242,6 +242,20 @@
                             <option value="draft" {{ $product->status == 'draft' ? 'selected' : '' }}>Draft</option>
                             <option value="inactive" {{ $product->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Gambar Utama</label>
+                        @if(!empty($product->gambar_utama))
+                            <div class="mb-2">
+                                <img src="{{ asset($product->gambar_utama) }}" alt="Preview" class="img-thumbnail" style="max-height: 100px;">
+                            </div>
+                        @endif
+                        <input type="file" name="gambar_utama_file" class="form-control mb-2" accept="image/*">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-link-45deg"></i> Atau Path</span>
+                            <input type="text" name="gambar_utama" class="form-control" value="{{ $product->gambar_utama }}" placeholder="Contoh: images/uploads/file.jpg">
+                        </div>
+                        <small class="text-muted">Upload file baru atau paste path gambar dari Asset Manager.</small>
                     </div>
                 </div>
                 <div class="modal-footer">
