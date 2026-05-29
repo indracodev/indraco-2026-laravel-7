@@ -54,6 +54,16 @@ class News extends Model
         $this->attributes['tanggal_eng'] = $value;
     }
 
+    public function getContentEnAttribute()
+    {
+        return $this->content_eng;
+    }
+
+    public function setContentEnAttribute($value)
+    {
+        $this->attributes['content_eng'] = $value;
+    }
+
     protected $fillable = [
         'slug',
         'judul',
@@ -62,6 +72,7 @@ class News extends Model
         'tanggal_eng',
         'content',
         'content_eng',
+        'content_en',
         'image_path',
     ];
 

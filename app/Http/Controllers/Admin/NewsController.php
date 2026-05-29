@@ -34,13 +34,17 @@ class NewsController extends Controller
             'date_text_en' => 'nullable|string|max:100',
             'content' => 'nullable|string',
             'content_en' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
         ]);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('images/news'), $filename);
+            $targetDir = public_path('images/news');
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+            $file->move($targetDir, $filename);
             $data['image_path'] = 'images/news/' . $filename;
         } else {
             $data['image_path'] = 'images/news-bg-4.webp'; // Default fallback
@@ -68,7 +72,7 @@ class NewsController extends Controller
             'date_text_en' => 'nullable|string|max:100',
             'content' => 'nullable|string',
             'content_en' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
         ]);
 
         if ($request->hasFile('image')) {
@@ -79,7 +83,11 @@ class NewsController extends Controller
             
             $file = $request->file('image');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('images/news'), $filename);
+            $targetDir = public_path('images/news');
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+            $file->move($targetDir, $filename);
             $data['image_path'] = 'images/news/' . $filename;
         }
 
