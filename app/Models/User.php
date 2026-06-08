@@ -16,6 +16,8 @@ class User extends Authenticatable
 
     protected $table = 'master_admin';
 
+    const UPDATED_AT = null;
+
     protected $fillable = [
         'username',
         'email',
