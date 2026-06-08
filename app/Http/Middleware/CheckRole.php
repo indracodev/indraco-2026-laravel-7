@@ -11,7 +11,7 @@ class CheckRole
      * Handle an incoming request.
      * Usage: ->middleware('role:superadmin,admin')
      */
-    public function handle(Request $request, Closure $next, ...$roles): mixed
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         $userRole = auth()->user()->role ?? null;
 
