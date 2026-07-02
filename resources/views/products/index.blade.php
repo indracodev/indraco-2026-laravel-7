@@ -144,6 +144,19 @@
                                         </article>
                                     </a>
                                 </div>
+                                {{-- TODO: HIDE THIS KOPI CERIA --}}
+                                <div class="col d-none">
+                                    <a href="{{ route('products.show', 'kopi-ceria') }}"
+                                        class="text-reset text-decoration-none opacity-100">
+                                        <article class="ratio ratio-16x9 card bg-light-subtle p-4 rounded-4 border-0">
+                                            <img src="{{ asset('images/logo-kopi-ceria.png') }}"
+                                                data-light="{{ asset('images/logo-kopi-ceria.png') }}"
+                                                data-dark="{{ asset('images/logo-kopi-ceria.png') }}"
+                                                class="theme-image object-fit-contain w-100 h-100 top-50 start-50 translate-middle"
+                                                alt="" loading="lazy" aria-hidden="true">
+                                        </article>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 

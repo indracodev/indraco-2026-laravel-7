@@ -16,7 +16,8 @@
                 @else
                     @php
                         $merek_slug = str_replace('consumer-', '', $brand->slug);
-                        $logo_img = "images/logo-{$merek_slug}.png";
+                        $logo_img = !empty($brand->logo_path) ? $brand->logo_path : "images/logo-{$merek_slug}.png";
+                        // $logo_img = "images/logo-{$merek_slug}.png";
                     @endphp
                     <img src="{{ asset($logo_img) }}" alt="" loading="lazy" aria-hidden="true" class="theme-image w-75 mx-auto order-lg-2 me-lg-0" style="max-width: 280px;" onerror="this.src='{{ asset('images/logo-tugu-buaya.png') }}'">
                     <h2 class="display-4 text-capitalize fw-thin order-lg-1 text-center text-lg-start">
