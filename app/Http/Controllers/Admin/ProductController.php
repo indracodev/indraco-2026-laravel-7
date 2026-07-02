@@ -61,6 +61,8 @@ class ProductController extends Controller
             }
         }
 
+        unset($data['gambar_utama_file']);
+
         $product->update($data);
         return redirect()->back()->with('success', 'Produk berhasil diperbarui.');
     }

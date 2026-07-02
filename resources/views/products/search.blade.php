@@ -26,7 +26,7 @@
             <ol class="list-unstyled mb-0 row product-list row-cols-1 row-gap-5 row-cols-sm-2 row-cols-lg-4 gx-sm-4 gx-lg-5 pt-lg-5">
                 @forelse ($products as $prod)
                     @php
-                        $img_path = !empty($prod->gambar_utama) ? $prod->gambar_utama : 'images/no-image.png';
+                        $img_path = !empty($prod->gambar_utama) && file_exists(public_path($prod->gambar_utama)) ? $prod->gambar_utama : 'images/no-image.png';
                         // Check if link_web is available, otherwise link to detail page if we have one
                         // Based on ProductController, many products use link_web.
                         $target_link = !empty($prod->link_web) ? $prod->link_web : '#';

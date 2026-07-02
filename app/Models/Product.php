@@ -51,6 +51,7 @@ class Product extends Model
 
     protected $casts = [
         'gallery_images' => 'json',
+        'gambar_gallery_json' => 'json',
         'is_featured' => 'boolean',
     ];
 
