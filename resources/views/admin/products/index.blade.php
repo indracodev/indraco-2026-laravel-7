@@ -143,7 +143,7 @@
             <div class="modal-body text-start">
                 <div class="text-center mb-4">
                     @php
-                        $img_path = !empty($product->gambar_utama) ? $product->gambar_utama : 'images/no-image.png';
+                        $img_path = !empty($product->gambar_utama) && file_exists(public_path($product->gambar_utama)) ? $product->gambar_utama : 'images/no-image.png';
                     @endphp
                     <img src="{{ asset($img_path) }}" alt="{{ $product->name }}" class="img-fluid rounded shadow-sm" style="max-height: 250px; object-fit: contain;">
                 </div>
@@ -245,9 +245,13 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Gambar Utama</label>
-                        @if(!empty($product->gambar_utama))
+                        @if(!empty($product->gambar_utama) && file_exists(public_path($product->gambar_utama)))
                             <div class="mb-2">
                                 <img src="{{ asset($product->gambar_utama) }}" alt="Preview" class="img-thumbnail" style="max-height: 100px;">
+                            </div>
+                        @else
+                            <div class="mb-2">
+                                <img src="{{ asset('images/no-image.png') }}" alt="Preview" class="img-thumbnail" style="max-height: 100px;">
                             </div>
                         @endif
                         <input type="file" name="gambar_utama_file" class="form-control mb-2" accept="image/*">

@@ -132,7 +132,7 @@ if (!function_exists('renderRatingStars')) {
                             $v_icon = $v->icon_path;
                         } else {
                             $firstProd = $v->products->first();
-                            $v_icon = $firstProd && !empty($firstProd->gambar_utama)
+                            $v_icon = $firstProd && !empty($firstProd->gambar_utama) && file_exists(public_path($firstProd->gambar_utama))
                                 ? $firstProd->gambar_utama
                                 : 'images/no-image.png';
                         }
@@ -204,7 +204,7 @@ if (!function_exists('renderRatingStars')) {
                         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 py-5 g-4">
                             @forelse ($v->products as $prod)
                             @php
-                                $img_p  = !empty($prod->gambar_utama) ? $prod->gambar_utama : 'images/no-image.png';
+                                $img_p  = !empty($prod->gambar_utama) && file_exists(public_path($prod->gambar_utama)) ? $prod->gambar_utama : 'images/no-image.png';
                                 $link_p = !empty($prod->link_web) ? $prod->link_web : '#';
                             @endphp
                             <div class="col">
