@@ -63,4 +63,48 @@ class PageController extends Controller
         $request->validate(['email' => 'required|email']);
         return back()->with('success', 'Terima kasih telah berlangganan!');
     }
+
+    public function sitemap()
+    {
+        $urls = [
+            url('/'),
+            url('/products'),
+            url('/news'),
+            url('/about'),
+            url('/businesses'),
+            url('/stores'),
+            url('/download'),
+            url('/career'),
+            url('/contact'),
+            url('/equipment'),
+            url('/foodservice'),
+            url('/privacy'),
+            url('/terms')
+        ];
+
+        $brands = \App\Models\Brand::all();
+        foreach($brands as $brand) {
+            $urls[] = url('/products/' . $brand->slug);
+        }
+        
+        $news = \App\Models\News::all();
+        foreach($news as $item) {
+            $urls[] = url('/news/' . $item->slug);
+        }
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+        
+        foreach($urls as $url) {
+            $xml .= '<url>';
+            $xml .= '<loc>' . htmlspecialchars($url) . '</loc>';
+            $xml .= '<changefreq>weekly</changefreq>';
+            $xml .= '<priority>0.8</priority>';
+            $xml .= '</url>';
+        }
+
+        $xml .= '</urlset>';
+
+        return response($xml)->header('Content-Type', 'text/xml');
+    }
 }

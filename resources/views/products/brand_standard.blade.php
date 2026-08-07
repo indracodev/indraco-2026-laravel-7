@@ -17,9 +17,11 @@
                     @php
                         $merek_slug = str_replace('consumer-', '', $brand->slug);
                         $logo_img = !empty($brand->logo_path) ? $brand->logo_path : "images/logo-{$merek_slug}.png";
-                        // $logo_img = "images/logo-{$merek_slug}.png";
+                        if(!file_exists(public_path($logo_img))) {
+                            $logo_img = 'images/logo-tugu-buaya.png';
+                        }
                     @endphp
-                    <img src="{{ asset($logo_img) }}" alt="" loading="lazy" aria-hidden="true" class="theme-image w-75 mx-auto order-lg-2 me-lg-0" style="max-width: 280px;" onerror="this.src='{{ asset('images/logo-tugu-buaya.png') }}'">
+                    <img src="{{ asset($logo_img) }}" alt="" loading="lazy" aria-hidden="true" class="theme-image w-75 mx-auto order-lg-2 me-lg-0" style="max-width: 280px;">
                     <h2 class="display-4 text-capitalize fw-thin order-lg-1 text-center text-lg-start">
                         <span>{{ __('nav_product') }}</span> <br>
                         <b class="fw-bold">

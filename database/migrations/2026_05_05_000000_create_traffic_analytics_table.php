@@ -16,7 +16,7 @@ class CreateTrafficAnalyticsTable extends Migration
         Schema::create('traffic_analytics', function (Blueprint $blueprint) {
             $blueprint->id();
             $blueprint->string('url', 2048);
-            $blueprint->string('path', 1024);
+            $blueprint->string('path');
             $blueprint->string('method', 10);
             $blueprint->string('ip_address', 45);
             $blueprint->text('user_agent')->nullable();

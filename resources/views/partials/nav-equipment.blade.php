@@ -35,11 +35,14 @@
                     <p class="mb-4" data-i18n="{{ $sub['dk'] }}">{{ __($sub['dk']) }}</p>
                     <div class="d-flex gap-3 w-100 tab-figure-image flex-grow-1 align-items-end">
                         @for($i=1;$i<=3;$i++)
+                        @php $img_path = 'images/submenu-'.$sub['img'].$i.'.jpg'; @endphp
+                        @if(file_exists(public_path($img_path)))
                         <figure class="figure w-100 m-0">
                             <div class="figure-img ratio ratio-1x1 w-100 bg-secondary m-0">
-                                <img src="{{ asset('images/submenu-'.$sub['img'].$i.'.jpg') }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100" onerror="this.parentElement.style.display='none'">
+                                <img src="{{ asset($img_path) }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100">
                             </div>
                         </figure>
+                        @endif
                         @endfor
                     </div>
                 </div>
@@ -62,11 +65,14 @@
                     <p class="mb-4" data-i18n="naveq_23">{{ __('naveq_23') }}</p>
                     <div class="d-flex gap-3 w-100 tab-figure-image flex-grow-1 align-items-end">
                         @for($i=1;$i<=3;$i++)
+                        @php $img_path = 'images/submenu-dispenser-instant'.$i.'.jpg'; @endphp
+                        @if(file_exists(public_path($img_path)))
                         <figure class="figure w-100 m-0">
                             <div class="figure-img ratio ratio-1x1 w-100 bg-secondary m-0">
-                                <img src="{{ asset('images/submenu-dispenser-instant'.$i.'.jpg') }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100" onerror="this.parentElement.style.display='none'">
+                                <img src="{{ asset($img_path) }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100">
                             </div>
                         </figure>
+                        @endif
                         @endfor
                     </div>
                 </div>
@@ -75,11 +81,14 @@
                     <p class="mb-4" data-i18n="naveq_25">{{ __('naveq_25') }}</p>
                     <div class="d-flex gap-3 w-100 tab-figure-image flex-grow-1 align-items-end">
                         @for($i=1;$i<=3;$i++)
+                        @php $img_path = 'images/submenu-dispenser-cold'.$i.'.jpg'; @endphp
+                        @if(file_exists(public_path($img_path)))
                         <figure class="figure w-100 m-0">
                             <div class="figure-img ratio ratio-1x1 w-100 bg-secondary m-0">
-                                <img src="{{ asset('images/submenu-dispenser-cold'.$i.'.jpg') }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100" onerror="this.parentElement.style.display='none'">
+                                <img src="{{ asset($img_path) }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100">
                             </div>
                         </figure>
+                        @endif
                         @endfor
                     </div>
                 </div>
@@ -114,11 +123,14 @@
                     <p class="mb-4" data-i18n="{{ $sub['dk'] }}">{{ __($sub['dk']) }}</p>
                     <div class="d-flex gap-3 w-100 tab-figure-image flex-grow-1 align-items-end">
                         @for($i=1;$i<=3;$i++)
+                        @php $img_path = 'images/submenu-'.$sub['img'].$i.'.jpg'; @endphp
+                        @if(file_exists(public_path($img_path)))
                         <figure class="figure w-100 m-0">
                             <div class="figure-img ratio ratio-1x1 w-100 bg-secondary m-0">
-                                <img src="{{ asset('images/submenu-'.$sub['img'].$i.'.jpg') }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100" onerror="this.parentElement.style.display='none'">
+                                <img src="{{ asset($img_path) }}" alt="" loading="lazy" class="object-fit-cover w-100 h-100">
                             </div>
                         </figure>
+                        @endif
                         @endfor
                     </div>
                 </div>

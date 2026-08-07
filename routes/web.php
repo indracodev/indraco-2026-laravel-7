@@ -28,6 +28,9 @@ Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 // Subscription
 Route::post('/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'store'])->name('subscribe');
 
+// Sitemap
+Route::get('/sitemap.xml', [\App\Http\Controllers\PageController::class, 'sitemap'])->name('sitemap');
+
 // Localization
 Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['id', 'en'])) {

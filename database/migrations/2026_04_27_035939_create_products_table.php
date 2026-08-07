@@ -4,21 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('master_produk', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->nullable()->constrained('brands')->nullOnDelete();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
-            $table->foreignId('collection_id')->nullable()->constrained('collections')->nullOnDelete();
-            $table->foreignId('type_id')->nullable()->constrained('types')->nullOnDelete();
-            $table->foreignId('variant_id')->nullable()->constrained('variants')->nullOnDelete();
-            $table->string('name', 150);
+            $table->foreignId('merek_id')->nullable()->constrained('master_merek')->nullOnDelete();
+            $table->foreignId('kategori_id')->nullable()->constrained('master_kategori')->nullOnDelete();
+            $table->foreignId('collection_id')->nullable()->constrained('master_collection')->nullOnDelete();
+            $table->foreignId('type_id')->nullable()->constrained('master_type')->nullOnDelete();
+            $table->foreignId('variant_id')->nullable()->constrained('master_variant')->nullOnDelete();
+            $table->string('nama_produk', 150);
             $table->string('slug', 255)->unique();
             $table->string('sku', 100)->nullable();
             $table->text('short_description')->nullable();
@@ -45,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('master_produk');
     }
-};
+}

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateMasterLogAktivitasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('master_log_aktivitas', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('aktivitas'); // created, updated, deleted, login, logout
             $table->string('model')->nullable();
             $table->unsignedBigInteger('model_id')->nullable();
@@ -35,4 +35,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('master_log_aktivitas');
     }
-};
+}

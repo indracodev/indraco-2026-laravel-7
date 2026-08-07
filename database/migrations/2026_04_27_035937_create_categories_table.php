@@ -4,20 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('master_kategori', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->nullable()->constrained('categories')->nullOnDelete();
-            $table->string('name', 100);
+            $table->foreignId('parent_id')->nullable()->constrained('master_kategori')->nullOnDelete();
+            $table->string('nama_kategori', 100);
             $table->string('slug', 100)->unique();
-            $table->string('icon_path', 255)->nullable();
-            $table->integer('order')->default(0);
+            $table->string('ikon_path', 255)->nullable();
+            $table->integer('urutan')->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('master_kategori');
     }
-};
+}
